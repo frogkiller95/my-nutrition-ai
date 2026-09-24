@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор БЖУ и ХЕ</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .wrapper {
+            display: flex;
+            gap: 20px;
+            max-width: 1200px;
+            width: 100%;
+            align-items: flex-start;
+        }
+        /* ЛЕВАЯ КОЛОНКА — ИСТОРИЯ */
+        .history-column {
+            flex: 0 0 340px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        /* ПРАВАЯ КОЛОНКА — КАЛЬКУЛЯТОР */
+        .main-column {
+            flex: 1;
+            background: #fff;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            min-width: 0;
+        }
+        h1 { text-align: center; color: #333; margin-bottom: 22px; font-size: 24px; }
+        h2 { color: #333; font-size: 19px; margin: 20px 0 12px; }
+        label { display: block; margin-bottom: 6px; color: #555; font-weight: 500; font-size: 14px; }
+        input[type="text"], input[type="number"], select {
+            padding: 11px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: border 0.3s;
+            width: 100%;
+        }
+        input:focus, select:focus { outline: none; border-color: #667eea; }
+        .dish-row {
+            display: flex; gap: 8px; margin-bottom: 10px; align-items: center;
+        }
+        .dish-row input[type="text"] { flex: 1; }
+        .dish-row input[type="number"] { width: 100px; }
+        .remove-btn {
+            background: #ef5350; color: white; border: none;
+            width: 36px; height: 36px; border-radius: 8px;
+            cursor: pointer; font-size: 16px;
+            flex-shrink: 0;
+        }
+        .add-btn {
+            background: #66bb6a; color: white; border: none;
+            padding: 10px 14px; border-radius: 8px;
+            cursor: pointer; font-size: 14px; font-weight: 600;
+            margin-bottom: 14px;
+        }
+        button[type="submit"] {
+            width: 100%; padding: 13px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; border: none; border-radius: 10px;
+            font-size: 16px; font-weight: 600; cursor: pointer;
+        }
+        .result {
+            margin-top: 12px; padding: 16px;
+            background: #f7f8fc; border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+        .result h3 { color: #333; font-size: 17px; margin-bottom: 10px; }
+        .nutrient {
+            display: flex; justify-content: space-between;
+            padding: 6px 0; font-size: 14px;
+        }
+        .nutrient span:first-child { color: #666; }
+        .nutrient span:last-child { font-weight: 700; color: #333; }
+        .cal-xe { display: flex; gap: 8px; margin-top: 10px; }
+        .cal-xe > div {
+            flex: 1; padding: 10px; border-radius: 8px;
+            color: white; text-align: center;
+        }
+        .cal-box { background: linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%); }
+        .xe-box { background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%); }
+        .cal-xe .value { font-size: 20px; font-weight: 800; display: block; }
+        .cal-xe .label { font-size: 11px; opacity: 0.9; }
+        /* ИСТОРИЯ */
+        .history-item {
+            display: flex; justify-content: space-between;
+            padding: 10px 12px; margin-bottom: 6px;
+            background: #f7f8fc; border-radius: 8px;
+            font-size: 14px;
+            border-left: 3px solid #764ba2;
+        }
+        .history-item .name { font-weight: 600; color: #333; }
+        .history-item .info { color: #666; font-size: 12px; }
+        .totals {
+            margin-top: 12px; padding: 14px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: 10px; border-left: 5px solid #43a047;
+        }
+        .totals h3 { color: #1b5e20; font-size: 16px; margin-bottom: 8px; }
+        .totals p { color: #333; font-size: 14px; line-height: 1.6; }
+        .empty-history {
+            color: #999; font-size: 14px; text-align: center;
+            padding: 20px; font-style: italic;
+        }
+        .ai-block {
+            margin-top: 20px; padding: 18px;
+            background: linear-gradient(135deg, #f3e5f5 0%, #ede7f6 100%);
+            border-radius: 15px; border-left: 5px solid #764ba2;
+        }
+        .ai-block h3 { color: #4a148c; margin-bottom: 12px; font-size: 16px; }
+        .ai-block p { color: #333; line-height: 1.6; font-size: 14px; white-space: pre-wrap; }
+        .ai-block button {
+            width: 100%; padding: 12px; margin-top: 8px;
+            background: linear-gradient(135deg, #764ba2 0%, #5e35b1 100%);
+            color: white; border: none; border-radius: 10px;
+            font-size: 15px; font-weight: 600; cursor: pointer;
+        }
+        .disclaimer {
+            margin-top: 20px; font-size: 12px; color: #999;
+            text-align: center; font-style: italic;
+        }
+        .clear-btn {
+            background: #e53935; margin-top: 10px; padding: 8px;
+            color: white; border: none; border-radius: 8px;
+            font-size: 13px; cursor: pointer; width: 100%;
+        }
+        .loader { color: #667eea; font-weight: 600; text-align: center; margin-top: 10px; }
+
+        /* АДАПТИВ ДЛЯ ТЕЛЕФОНОВ И ПЛАНШЕТОВ */
+        @media (max-width: 900px) {
+            .wrapper { flex-direction: column; }
+            .history-column {
+                flex: 1 1 auto;
+                width: 100%;
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+
+        <!-- ЛЕВАЯ КОЛОНКА: ИСТОРИЯ -->
+        <div class="history-column">
+            <h2>📜 Моя история</h2>
+            <div id="historyBlock">
+                <div class="empty-history">Пока ничего не добавлено</div>
+            </div>
+        </div>
+
+        <!-- ПРАВАЯ КОЛОНКА: КАЛЬКУЛЯТОР + ИИ -->
+        <div class="main-column">
+            <h1>🥗 Калькулятор БЖУ и ХЕ</h1>
+
+            <form method="POST" id="mainForm" onsubmit="showLoader()">
+                <label>Что вы съели?</label>
+                <div id="dishList">
+                    <div class="dish-row">
+                        <input type="text" name="dish" placeholder="Например: банан" required>
+                        <input type="number" name="grams" value="150" min="1" required>
+                        <button type="button" class="remove-btn" onclick="removeRow(this)">✕</button>
+                    </div>
+                </div>
+                <button type="button" class="add-btn" onclick="addRow()">+ Добавить ещё блюдо</button>
+                
+                <button type="submit" id="calcBtn">Рассчитать всё</button>
+                <p id="loader" style="display:none;" class="loader">⏳ ИИ считает БЖУ... (10-30 сек)</p>
+            </form>
+
+            <div id="resultsBlock"></div>
+
+            <div class="ai-block">
+                <h3>🤖 Спросить ИИ о моём питании:</h3>
+                <label>Моя цель:</label>
+                <select id="goal">
+                    <option value="похудеть">Похудеть</option>
+                    <option value="набрать вес">Набрать вес</option>
+                    <option value="питаться правильно">Питаться правильно</option>
+                    <option value="контролировать диабет">Контролировать диабет</option>
+                </select>
+                <button type="button" onclick="askAboutHistory()">Проанализировать моё питание</button>
+                <p id="ai-analysis" style="margin-top: 15px;"></p>
+            </div>
+
+            <p class="disclaimer">⚠️ Расчёты ИИ носят ознакомительный характер. Консультируйтесь с врачом.</p>
+        </div>
+
+    </div>
+
+    <script>
+        function addRow() {
+            var list = document.getElementById('dishList');
+            var row = document.createElement('div');
+            row.className = 'dish-row';
+            row.innerHTML = '<input type="text" name="dish" placeholder="Ещё одно блюдо" required>' +
+                '<input type="number" name="grams" value="150" min="1" required>' +
+                '<button type="button" class="remove-btn" onclick="removeRow(this)">✕</button>';
+            list.appendChild(row);
+        }
+
+        function removeRow(btn) {
+            var list = document.getElementById('dishList');
+            if (list.children.length > 1) {
+                btn.parentElement.remove();
+            } else {
+                alert('Должно остаться хотя бы одно поле');
+            }
+        }
+
+        function showLoader() {
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('calcBtn').disabled = true;
+            document.getElementById('calcBtn').textContent = '⏳ Считаем...';
+        }
+
+        function saveToHistory(item) {
+            var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
+            history.push(item);
+            localStorage.setItem('foodHistory', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function clearHistory() {
+            if (confirm('Очистить всю историю?')) {
+                localStorage.removeItem('foodHistory');
+                renderHistory();
+            }
+        }
+
+        function renderHistory() {
+            var block = document.getElementById('historyBlock');
+            var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
+            
+            if (history.length === 0) {
+                block.innerHTML = '<div class="empty-history">Пока ничего не добавлено</div>';
+                return;
+            }
+            
+            var html = '';
+            
+            history.forEach(function(item) {
+                html += '<div class="history-item">';
+                html += '<div><div class="name">' + item.name + ' (' + item.grams + ' г)</div>';
+                html += '<div class="info">Б ' + item.protein + ' | Ж ' + item.fat + ' | У ' + item.carbs + ' | ХЕ ' + item.xe + '</div></div>';
+                html += '<div class="name">' + item.calories + '</div>';
+                html += '</div>';
+            });
+            
+            var totalCal = 0, totalP = 0, totalF = 0, totalC = 0, totalXe = 0;
+            history.forEach(function(item) {
+                totalCal += item.calories;
+                totalP += item.protein;
+                totalF += item.fat;
+                totalC += item.carbs;
+                totalXe += item.xe;
+            });
+            
+            html += '<div class="totals">';
+            html += '<h3>Итого за день:</h3>';
+            html += '<p><b>' + Math.round(totalCal) + ' ккал</b></p>';
+            html += '<p>Белки: ' + totalP.toFixed(1) + ' г | Жиры: ' + totalF.toFixed(1) + ' г | Углеводы: ' + totalC.toFixed(1) + ' г</p>';
+            html += '<p>Хлебные единицы: <b>' + totalXe.toFixed(1) + '</b></p>';
+            html += '</div>';
+            html += '<button class="clear-btn" onclick="clearHistory()">Очистить историю</button>';
+            
+            block.innerHTML = html;
+        }
+
+        async function askAboutHistory() {
+            var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
+            var goal = document.getElementById('goal').value;
+            var block = document.getElementById('ai-analysis');
+            
+            if (history.length === 0) {
+                block.textContent = 'Сначала добавьте хотя бы одно блюдо.';
+                return;
+            }
+            
+            block.textContent = '⏳ ИИ анализирует ваше питание... (10-30 секунд)';
+            
+            try {
+                var res = await fetch('/ask_history', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({history: history, goal: goal})
+                });
+                var data = await res.json();
+                block.textContent = data.answer;
+            } catch (e) {
+                block.textContent = 'Ошибка связи с ИИ. Попробуйте ещё раз.';
+            }
+        }
+
+        renderHistory();
+    </script>
+
+    {% if results %}
+    <script>
+        var newItems = [
+            {% for item in results %}
+            {name: "{{ item.name }}", grams: {{ item.grams }}, protein: {{ item.protein }}, fat: {{ item.fat }}, carbs: {{ item.carbs }}, xe: {{ item.xe }}, calories: {{ item.calories }}},
+            {% endfor %}
+        ];
+        newItems.forEach(function(item) { saveToHistory(item); });
+        
+        var resultsHtml = '<h2>📊 Результаты</h2>';
+        newItems.forEach(function(item) {
+            resultsHtml += '<div class="result">';
+            resultsHtml += '<h3>' + item.name + ' (' + item.grams + ' г)</h3>';
+            resultsHtml += '<div class="nutrient"><span>Белки</span><span>' + item.protein + ' г</span></div>';
+            resultsHtml += '<div class="nutrient"><span>Жиры</span><span>' + item.fat + ' г</span></div>';
+            resultsHtml += '<div class="nutrient"><span>Углеводы</span><span>' + item.carbs + ' г</span></div>';
+            resultsHtml += '<div class="cal-xe">';
+            resultsHtml += '<div class="cal-box"><span class="label">Калории</span><span class="value">' + item.calories + '</span></div>';
+            resultsHtml += '<div class="xe-box"><span class="label">ХЕ</span><span class="value">' + item.xe + '</span></div>';
+            resultsHtml += '</div></div>';
+        });
+        document.getElementById('resultsBlock').innerHTML = resultsHtml;
+    </script>
+    {% endif %}
+</body>
+</html>
