@@ -16,9 +16,8 @@ def ask_ai(prompt, timeout=45):
         print("Ошибка ИИ:", e)
         return None
 
-# === РАСЧЁТ НЕСКОЛЬКИХ БЛЮД ОДНИМ ЗАПРОСОМ ===
+# === РАСЧЁТ НЕСКОЛЬКИХ БЛЮД ===
 def calculate_bju_multiple(items):
-    # items = [{'dish': 'банан', 'grams': 150}, ...]
     lines = []
     for i, item in enumerate(items, 1):
         lines.append(f"{i}. {item['dish']} — {item['grams']} г")
@@ -30,7 +29,7 @@ def calculate_bju_multiple(items):
 Посчитай БЖУ и ХЕ для КАЖДОГО блюда (1 ХЕ = 10 г углеводов).
 Ответь ТОЛЬКО JSON-массивом, без пояснений:
 [{{"name": "Название", "grams": 150, "protein": 1.5, "fat": 0.3, "carbs": 30, "xe": 3.0}}]
-Числа — для указанного веса каждого блюда. Порядок сохрани как в списке. Ровно {len(items)} элементов в массиве."""
+Числа — для указанного веса каждого блюда. Порядок сохрани как в списке. Ровно {len(items)} элементов."""
     
     response = ask_ai(prompt)
     if not response:
@@ -80,17 +79,21 @@ def index():
     
     return render_template('index.html', results=results)
 
-# === АНАЛИЗ ИСТОРИИ ЧЕРЕЗ ИИ ===
+# === АНАЛИЗ ИСТОРИИ + ГЛЮКОЗЫ ЧЕРЕЗ ИИ ===
 @app.route('/ask_history', methods=['POST'])
 def ask_history():
     data = request.get_json()
     history = data.get('history', [])
     goal = data.get('goal', 'похудеть')
+    glucose = data.get('glucose', '')
+    target = data.get('target', '')
+    ratio = data.get('ratio', '')
+    timing = data.get('timing', '')
     
     if not history:
         return jsonify({'answer': 'История пуста. Сначала добавьте блюда.'})
     
-    history_text = "За сегодня пользователь съел:\n"
+    history_text = "Питание за день:\n"
     total_cal = 0
     total_p = total_f = total_c = total_xe = 0
     
@@ -104,18 +107,40 @@ def ask_history():
     
     history_text += f"\nИТОГО: {total_cal} ккал, Б {total_p} г, Ж {total_f} г, У {total_c} г, ХЕ {total_xe}"
     
-    prompt = f"""Ты диетолог-эндокринолог. Вот питание человека за день:
+    diabetes_block = ""
+    if glucose or target or ratio:
+        diabetes_block = "\n\n📊 ДАННЫЕ ПО ДИАБЕТУ:\n"
+        if glucose:
+            diabetes_block += f"- Текущий уровень глюкозы: {glucose} ммоль/л\n"
+        if target:
+            diabetes_block += f"- Целевой уровень: {target} ммоль/л\n"
+        if ratio:
+            diabetes_block += f"- Углеводный коэффициент: {ratio} ЕД инсулина на 1 ХЕ\n"
+        if timing:
+            diabetes_block += f"- Измерение: {timing}\n"
+        
+        if ratio and total_xe:
+            try:
+                estimated_insulin = float(ratio) * total_xe
+                diabetes_block += f"- На {total_xe:.1f} ХЕ по коэффициенту {ratio} выходит примерно {estimated_insulin:.1f} ЕД инсулина (справочно!)\n"
+            except:
+                pass
+    
+    prompt = f"""Ты диетолог-эндокринолог. Помогаешь человеку с диабетом 1 типа.
 
-{history_text}
+{history_text}{diabetes_block}
 
 Цель пользователя: {goal}.
 
-Дай подробный анализ (5-7 предложений):
-1. Что в этом рационе хорошо.
-2. Что стоит убрать или уменьшить.
-3. Что добавить.
-4. Общий совет с учётом цели.
+Дай подробный анализ (6-8 предложений):
+1. Общая оценка рациона (что хорошо, что плохо).
+2. Если есть данные по глюкозе — прокомментируй уровень и связь с едой.
+3. Если есть углеводный коэффициент — дай справочную оценку инсулина на съеденное (с оговоркой, что решение принимает врач).
+4. Что убрать или уменьшить.
+5. Что добавить.
+6. Общий совет с учётом цели.
 
+ВАЖНО: Всегда напоминай, что расчёт инсулина — только справочный, и решение принимает лечащий врач.
 Отвечай простым языком, без сложных терминов."""
     
     answer = ask_ai(prompt)
