@@ -1,0 +1,19 @@
+{
+  "name": "Калькулятор БЖУ и ХЕ",
+  "short_name": "БЖУ и ХЕ",
+  "description": "Расчёт БЖУ, ХЕ и калорий с помощью ИИ",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#667eea",
+  "orientation": "portrait",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "/static/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
