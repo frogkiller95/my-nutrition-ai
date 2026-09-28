@@ -5,247 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Калькулятор БЖУ и ХЕ</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥗</text></svg>">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="БЖУ и ХЕ">
+    <link rel="apple-touch-icon" href="/static/icon.svg">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <style>
         :root {
             --bg-grad: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --card-bg: #fff;
-            --text: #333;
-            --text-light: #666;
-            --text-muted: #999;
-            --border: #e0e0e0;
-            --input-bg: #fff;
-            --history-bg: #f7f8fc;
+            --card-bg: #fff; --text: #333; --text-light: #666; --text-muted: #999;
+            --border: #e0e0e0; --input-bg: #fff; --history-bg: #f7f8fc;
             --totals-bg: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
             --ai-bg: linear-gradient(135deg, #f3e5f5 0%, #ede7f6 100%);
             --shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
         body.dark {
             --bg-grad: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            --card-bg: #1e2749;
-            --text: #e8e8e8;
-            --text-light: #b0b0b0;
-            --text-muted: #888;
-            --border: #3a4570;
-            --input-bg: #2a3456;
-            --history-bg: #2a3456;
+            --card-bg: #1e2749; --text: #e8e8e8; --text-light: #b0b0b0; --text-muted: #888;
+            --border: #3a4570; --input-bg: #2a3456; --history-bg: #2a3456;
             --totals-bg: linear-gradient(135deg, #1b3a2a 0%, #2a4a3a 100%);
             --ai-bg: linear-gradient(135deg, #2a1e40 0%, #3a2a55 100%);
             --shadow: 0 20px 60px rgba(0,0,0,0.6);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        body {
-            min-height: 100vh;
-            background: var(--bg-grad);
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            transition: background 0.4s ease;
-            color: var(--text);
-        }
-        .wrapper {
-            display: flex; gap: 20px;
-            max-width: 1200px; width: 100%;
-            align-items: flex-start;
-        }
-        .history-column {
-            flex: 0 0 340px;
-            background: var(--card-bg);
-            border-radius: 20px; padding: 25px;
-            box-shadow: var(--shadow);
-            max-height: calc(100vh - 40px);
-            overflow-y: auto;
-            transition: background 0.3s;
-            animation: fadeIn 0.5s ease;
-        }
-        .main-column {
-            flex: 1;
-            background: var(--card-bg);
-            border-radius: 20px; padding: 35px;
-            box-shadow: var(--shadow);
-            min-width: 0;
-            transition: background 0.3s;
-            animation: fadeIn 0.5s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1); }
-        }
+        body { min-height: 100vh; background: var(--bg-grad); padding: 20px; display: flex; justify-content: center; align-items: flex-start; transition: background 0.4s; color: var(--text); }
+        .wrapper { display: flex; gap: 20px; max-width: 1200px; width: 100%; align-items: flex-start; }
+        .history-column { flex: 0 0 340px; background: var(--card-bg); border-radius: 20px; padding: 25px; box-shadow: var(--shadow); max-height: calc(100vh - 40px); overflow-y: auto; transition: background 0.3s; }
+        .main-column { flex: 1; background: var(--card-bg); border-radius: 20px; padding: 35px; box-shadow: var(--shadow); min-width: 0; transition: background 0.3s; }
         h1 { text-align: center; color: var(--text); margin-bottom: 22px; font-size: 24px; }
         h2 { color: var(--text); font-size: 19px; margin: 20px 0 12px; }
         label { display: block; margin-bottom: 6px; color: var(--text-light); font-weight: 500; font-size: 14px; }
-        input[type="text"], input[type="number"], select {
-            padding: 11px 14px;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            font-size: 15px;
-            transition: border 0.3s, background 0.3s;
-            width: 100%;
-            background: var(--input-bg);
-            color: var(--text);
-        }
+        input[type="text"], input[type="number"], input[type="email"], select { padding: 11px 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 15px; width: 100%; background: var(--input-bg); color: var(--text); transition: border 0.3s; }
         input:focus, select:focus { outline: none; border-color: #667eea; }
         .dish-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; }
         .dish-row input[type="text"] { flex: 1; }
         .dish-row input[type="number"] { width: 100px; }
-        .remove-btn {
-            background: #ef5350; color: white; border: none;
-            width: 36px; height: 36px; border-radius: 8px;
-            cursor: pointer; font-size: 16px; flex-shrink: 0;
-            transition: transform 0.2s;
-        }
-        .remove-btn:hover { transform: scale(1.1); }
-        .add-btn {
-            background: #66bb6a; color: white; border: none;
-            padding: 10px 14px; border-radius: 8px;
-            cursor: pointer; font-size: 14px; font-weight: 600;
-            margin-bottom: 14px;
-            transition: transform 0.2s;
-        }
-        .add-btn:hover { transform: translateY(-2px); }
-        button[type="submit"] {
-            width: 100%; padding: 13px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white; border: none; border-radius: 10px;
-            font-size: 16px; font-weight: 600; cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        button[type="submit"]:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102,126,234,0.5); }
+        .remove-btn { background: #ef5350; color: white; border: none; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; flex-shrink: 0; }
+        .icon-btn { background: #42a5f5; color: white; border: none; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; flex-shrink: 0; font-size: 16px; transition: transform 0.2s; }
+        .icon-btn:hover { transform: scale(1.1); }
+        .icon-btn.mic { background: #ef5350; }
+        .icon-btn.cam { background: #7e57c2; }
+        .add-btn { background: #66bb6a; color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+        button[type="submit"] { width: 100%; padding: 13px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; }
         button[type="submit"]:disabled { opacity: 0.6; cursor: wait; }
-        .result {
-            margin-top: 12px; padding: 16px;
-            background: var(--history-bg); border-radius: 15px;
-            border-left: 5px solid #667eea;
-            animation: popIn 0.4s ease;
-        }
+        .result { margin-top: 12px; padding: 16px; background: var(--history-bg); border-radius: 15px; border-left: 5px solid #667eea; }
         .result h3 { color: var(--text); font-size: 17px; margin-bottom: 10px; }
-        .nutrient {
-            display: flex; justify-content: space-between;
-            padding: 6px 0; font-size: 14px;
-        }
+        .nutrient { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
         .nutrient span:first-child { color: var(--text-light); }
         .nutrient span:last-child { font-weight: 700; color: var(--text); }
         .cal-xe { display: flex; gap: 8px; margin-top: 10px; }
-        .cal-xe > div {
-            flex: 1; padding: 10px; border-radius: 8px;
-            color: white; text-align: center;
-        }
+        .cal-xe > div { flex: 1; padding: 10px; border-radius: 8px; color: white; text-align: center; }
         .cal-box { background: linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%); }
         .xe-box { background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%); }
         .cal-xe .value { font-size: 20px; font-weight: 800; display: block; }
         .cal-xe .label { font-size: 11px; opacity: 0.9; }
-        .history-item {
-            display: flex; justify-content: space-between;
-            padding: 10px 12px; margin-bottom: 6px;
-            background: var(--history-bg); border-radius: 8px;
-            font-size: 14px;
-            border-left: 3px solid #764ba2;
-            animation: popIn 0.3s ease;
-        }
+        .history-item { display: flex; justify-content: space-between; padding: 10px 12px; margin-bottom: 6px; background: var(--history-bg); border-radius: 8px; font-size: 14px; border-left: 3px solid #764ba2; }
         .history-item .name { font-weight: 600; color: var(--text); }
         .history-item .info { color: var(--text-light); font-size: 12px; }
-        .totals {
-            margin-top: 12px; padding: 14px;
-            background: var(--totals-bg);
-            border-radius: 10px; border-left: 5px solid #43a047;
-        }
+        .totals { margin-top: 12px; padding: 14px; background: var(--totals-bg); border-radius: 10px; border-left: 5px solid #43a047; }
         .totals h3 { color: #1b5e20; font-size: 16px; margin-bottom: 8px; }
         body.dark .totals h3 { color: #66bb6a; }
         .totals p { color: var(--text); font-size: 14px; line-height: 1.6; }
-        .empty-history {
-            color: var(--text-muted); font-size: 14px; text-align: center;
-            padding: 20px; font-style: italic;
-        }
-        .ai-block {
-            margin-top: 20px; padding: 18px;
-            background: var(--ai-bg);
-            border-radius: 15px; border-left: 5px solid #764ba2;
-        }
+        .empty-history { color: var(--text-muted); font-size: 14px; text-align: center; padding: 20px; font-style: italic; }
+        .ai-block { margin-top: 20px; padding: 18px; background: var(--ai-bg); border-radius: 15px; border-left: 5px solid #764ba2; }
         .ai-block h3 { color: #4a148c; margin-bottom: 12px; font-size: 16px; }
         body.dark .ai-block h3 { color: #ce93d8; }
         .ai-block p { color: var(--text); line-height: 1.6; font-size: 14px; white-space: pre-wrap; }
-        .ai-block button {
-            width: 100%; padding: 12px; margin-top: 8px;
-            background: linear-gradient(135deg, #764ba2 0%, #5e35b1 100%);
-            color: white; border: none; border-radius: 10px;
-            font-size: 15px; font-weight: 600; cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .ai-block button:hover { transform: translateY(-2px); }
-        .diabetes-box {
-            margin-top: 14px; padding: 12px;
-            background: rgba(233,30,99,0.08);
-            border-radius: 10px; border-left: 4px solid #e91e63;
-        }
+        .ai-block button { width: 100%; padding: 12px; margin-top: 8px; background: linear-gradient(135deg, #764ba2 0%, #5e35b1 100%); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
+        .diabetes-box { margin-top: 14px; padding: 12px; background: rgba(233,30,99,0.08); border-radius: 10px; border-left: 4px solid #e91e63; }
         body.dark .diabetes-box { background: rgba(233,30,99,0.15); }
-        .diabetes-box .box-title {
-            font-weight: 600; margin-bottom: 10px;
-            color: var(--text); font-size: 14px;
-        }
-        .disclaimer {
-            margin-top: 20px; font-size: 12px; color: var(--text-muted);
-            text-align: center; font-style: italic;
-        }
-        .clear-btn {
-            background: #e53935; margin-top: 10px; padding: 8px;
-            color: white; border: none; border-radius: 8px;
-            font-size: 13px; cursor: pointer; width: 100%;
-            transition: opacity 0.2s;
-        }
-        .clear-btn:hover { opacity: 0.85; }
+        .diabetes-box .box-title { font-weight: 600; margin-bottom: 10px; color: var(--text); font-size: 14px; }
+        .email-block { margin-top: 20px; padding: 18px; background: var(--history-bg); border-radius: 15px; border-left: 5px solid #ff9800; }
+        .email-block h3 { color: var(--text); margin-bottom: 12px; font-size: 16px; }
+        .email-block button { width: 100%; padding: 12px; margin-top: 8px; background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
+        .disclaimer { margin-top: 20px; font-size: 12px; color: var(--text-muted); text-align: center; font-style: italic; }
+        .clear-btn { background: #e53935; margin-top: 10px; padding: 8px; color: white; border: none; border-radius: 8px; font-size: 13px; cursor: pointer; width: 100%; }
         .loader { color: #667eea; font-weight: 600; text-align: center; margin-top: 10px; }
-
-        .top-bar {
-            display: flex; justify-content: space-between; align-items: center;
-            max-width: 1200px; width: 100%; margin-bottom: 15px;
-            padding: 0 10px;
-        }
-        .theme-toggle {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid rgba(255,255,255,0.4);
-            color: white; padding: 8px 14px;
-            border-radius: 50px; cursor: pointer;
-            font-size: 15px; font-weight: 600;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s;
-        }
-        .theme-toggle:hover { background: rgba(255,255,255,0.35); }
-        .page-wrap {
-            display: flex; flex-direction: column;
-            align-items: center; width: 100%;
-            max-width: 1200px;
-        }
-
-        .chart-block, .export-block {
-            margin-top: 20px; padding: 18px;
-            background: var(--history-bg); border-radius: 15px;
-            border-left: 5px solid #42a5f5;
-        }
-        .chart-block h3, .export-block h3 {
-            color: var(--text); margin-bottom: 12px; font-size: 16px;
-        }
-        .export-btn {
-            width: 100%; padding: 12px;
-            background: linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%);
-            color: white; border: none; border-radius: 10px;
-            font-size: 15px; font-weight: 600; cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .export-btn:hover { transform: translateY(-2px); }
-
+        .top-bar { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; width: 100%; margin-bottom: 15px; padding: 0 10px; gap: 10px; flex-wrap: wrap; }
+        .theme-toggle, .install-btn { background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4); color: white; padding: 8px 14px; border-radius: 50px; cursor: pointer; font-size: 15px; font-weight: 600; backdrop-filter: blur(10px); }
+        .install-btn { background: rgba(102,187,106,0.5); display: none; }
+        .page-wrap { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 1200px; }
+        .chart-block, .export-block { margin-top: 20px; padding: 18px; background: var(--history-bg); border-radius: 15px; border-left: 5px solid #42a5f5; }
+        .chart-block h3, .export-block h3 { color: var(--text); margin-bottom: 12px; font-size: 16px; }
+        .export-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
+        .scanner-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        .scanner-modal.active { display: flex; }
+        .scanner-content { background: white; border-radius: 15px; padding: 20px; max-width: 500px; width: 100%; }
+        .scanner-content h3 { margin-bottom: 12px; }
+        #reader { width: 100%; border-radius: 10px; overflow: hidden; }
+        .close-scanner { background: #e53935; color: white; border: none; padding: 10px; border-radius: 8px; width: 100%; margin-top: 12px; cursor: pointer; font-weight: 600; }
+        .listening { animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
         @media (max-width: 900px) {
             .wrapper { flex-direction: column; }
             .history-column { flex: 1 1 auto; width: 100%; max-height: none; }
         }
         @media print {
             body { background: white; padding: 0; }
-            .theme-toggle, .clear-btn, .add-btn, .remove-btn,
-            .ai-block, #mainForm, .chart-block, .export-block { display: none; }
+            .theme-toggle, .clear-btn, .add-btn, .remove-btn, .icon-btn, .install-btn,
+            .ai-block, .email-block, #mainForm, .chart-block, .export-block, .top-bar { display: none; }
             .wrapper { flex-direction: column; }
             .history-column, .main-column { box-shadow: none; }
         }
@@ -255,14 +115,13 @@
     <div class="page-wrap">
         <div class="top-bar">
             <button class="theme-toggle" onclick="toggleTheme()">🌙 Тёмная тема</button>
+            <button class="install-btn" id="installBtn" onclick="installPWA()">📲 Установить приложение</button>
         </div>
 
         <div class="wrapper">
             <div class="history-column">
                 <h2>📜 Моя история</h2>
-                <div id="historyBlock">
-                    <div class="empty-history">Пока ничего не добавлено</div>
-                </div>
+                <div id="historyBlock"><div class="empty-history">Пока ничего не добавлено</div></div>
 
                 <div class="chart-block">
                     <h3>📊 Калории за неделю</h3>
@@ -284,6 +143,8 @@
                         <div class="dish-row">
                             <input type="text" name="dish" placeholder="Например: банан" required>
                             <input type="number" name="grams" value="150" min="1" required>
+                            <button type="button" class="icon-btn mic" onclick="startVoice(this)" title="Голосовой ввод">🎤</button>
+                            <button type="button" class="icon-btn cam" onclick="openScanner()" title="Сканировать штрихкод">📷</button>
                             <button type="button" class="remove-btn" onclick="removeRow(this)">✕</button>
                         </div>
                     </div>
@@ -307,16 +168,12 @@
 
                     <div class="diabetes-box">
                         <p class="box-title">🩸 Для людей с диабетом (необязательно):</p>
-
                         <label>Текущий сахар (ммоль/л):</label>
                         <input type="number" id="glucose" step="0.1" min="0" placeholder="Например: 6.5">
-
                         <label>Целевой сахар (ммоль/л):</label>
                         <input type="number" id="target" step="0.1" min="0" placeholder="Например: 5.5">
-
                         <label>Углеводный коэффициент (ЕД на 1 ХЕ):</label>
                         <input type="number" id="ratio" step="0.1" min="0" placeholder="Например: 1.5">
-
                         <label>Когда измеряли:</label>
                         <select id="timing">
                             <option value="">— не выбрано —</option>
@@ -331,8 +188,24 @@
                     <p id="ai-analysis" style="margin-top: 15px;"></p>
                 </div>
 
+                <div class="email-block">
+                    <h3>📧 Отправить отчёт на почту</h3>
+                    <label>Ваш email:</label>
+                    <input type="email" id="emailTo" placeholder="example@mail.ru">
+                    <button type="button" onclick="sendEmailReport()">Отправить отчёт</button>
+                    <p id="email-status" style="margin-top: 10px; font-size: 14px;"></p>
+                </div>
+
                 <p class="disclaimer">⚠️ Расчёты ИИ носят ознакомительный характер. Консультируйтесь с врачом.</p>
             </div>
+        </div>
+    </div>
+
+    <div class="scanner-modal" id="scannerModal">
+        <div class="scanner-content">
+            <h3>📷 Наведите камеру на штрихкод</h3>
+            <div id="reader"></div>
+            <button class="close-scanner" onclick="closeScanner()">Закрыть</button>
         </div>
     </div>
 
@@ -349,12 +222,29 @@
             document.querySelector('.theme-toggle').textContent = '☀️ Светлая тема';
         }
 
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(e => console.log('SW ошибка:', e));
+        }
+        let deferredPrompt = null;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installBtn').style.display = 'inline-block';
+        });
+        function installPWA() {
+            if (!deferredPrompt) { alert('Приложение уже установлено или браузер не поддерживает установку'); return; }
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(() => { deferredPrompt = null; document.getElementById('installBtn').style.display = 'none'; });
+        }
+
         function addRow() {
             var list = document.getElementById('dishList');
             var row = document.createElement('div');
             row.className = 'dish-row';
             row.innerHTML = '<input type="text" name="dish" placeholder="Ещё одно блюдо" required>' +
                 '<input type="number" name="grams" value="150" min="1" required>' +
+                '<button type="button" class="icon-btn mic" onclick="startVoice(this)">🎤</button>' +
+                '<button type="button" class="icon-btn cam" onclick="openScanner()">📷</button>' +
                 '<button type="button" class="remove-btn" onclick="removeRow(this)">✕</button>';
             list.appendChild(row);
         }
@@ -369,6 +259,59 @@
             document.getElementById('calcBtn').textContent = '⏳ Считаем...';
         }
 
+        function startVoice(btn) {
+            const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SR) { alert('Голосовой ввод не поддерживается этим браузером'); return; }
+            const recognition = new SR();
+            recognition.lang = 'ru-RU';
+            recognition.interimResults = false;
+            btn.classList.add('listening');
+            btn.textContent = '🔴';
+            recognition.onresult = (event) => {
+                const text = event.results[0][0].transcript;
+                const input = btn.parentElement.querySelector('input[name="dish"]');
+                input.value = text;
+            };
+            recognition.onend = () => { btn.classList.remove('listening'); btn.textContent = '🎤'; };
+            recognition.onerror = () => { btn.classList.remove('listening'); btn.textContent = '🎤'; };
+            recognition.start();
+        }
+
+        let scannerInstance = null;
+        function openScanner() {
+            document.getElementById('scannerModal').classList.add('active');
+            scannerInstance = new Html5Qrcode("reader");
+            scannerInstance.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: { width: 250, height: 150 } },
+                (decodedText) => {
+                    closeScanner();
+                    lookupBarcode(decodedText);
+                },
+                () => {}
+            ).catch(err => {
+                alert('Не удалось открыть камеру: ' + err);
+                closeScanner();
+            });
+        }
+        function closeScanner() {
+            if (scannerInstance) {
+                scannerInstance.stop().then(() => { scannerInstance.clear(); scannerInstance = null; });
+            }
+            document.getElementById('scannerModal').classList.remove('active');
+        }
+        async function lookupBarcode(code) {
+            try {
+                const res = await fetch('/barcode/' + code);
+                const data = await res.json();
+                if (data.error) { alert('Продукт не найден в базе'); return; }
+                const input = document.querySelector('input[name="dish"]');
+                input.value = data.name;
+                document.querySelector('input[name="grams"]').value = 100;
+                alert('Найдено: ' + data.name + '\nБЖУ на 100 г: Б ' + data.protein + ', Ж ' + data.fat + ', У ' + data.carbs);
+            } catch (e) { alert('Ошибка поиска штрихкода'); }
+        }
+
         function getTodayKey() {
             var d = new Date();
             return d.getFullYear() + '-' + (d.getMonth()+1).toString().padStart(2,'0') + '-' + d.getDate().toString().padStart(2,'0');
@@ -378,40 +321,30 @@
             var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
             history.push(item);
             localStorage.setItem('foodHistory', JSON.stringify(history));
-            renderHistory();
-            renderChart();
+            renderHistory(); renderChart();
         }
         function clearHistory() {
             if (confirm('Очистить всю историю?')) {
                 localStorage.removeItem('foodHistory');
-                renderHistory();
-                renderChart();
+                renderHistory(); renderChart();
             }
         }
         function renderHistory() {
             var block = document.getElementById('historyBlock');
             var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
-            if (history.length === 0) {
-                block.innerHTML = '<div class="empty-history">Пока ничего не добавлено</div>';
-                return;
-            }
+            if (history.length === 0) { block.innerHTML = '<div class="empty-history">Пока ничего не добавлено</div>'; return; }
             var html = '';
             history.forEach(function(item) {
-                html += '<div class="history-item">';
-                html += '<div><div class="name">' + item.name + ' (' + item.grams + ' г)</div>';
+                html += '<div class="history-item"><div><div class="name">' + item.name + ' (' + item.grams + ' г)</div>';
                 html += '<div class="info">Б ' + item.protein + ' | Ж ' + item.fat + ' | У ' + item.carbs + ' | ХЕ ' + item.xe + '</div></div>';
-                html += '<div class="name">' + item.calories + '</div>';
-                html += '</div>';
+                html += '<div class="name">' + item.calories + '</div></div>';
             });
-            var totalCal = 0, totalP = 0, totalF = 0, totalC = 0, totalXe = 0;
-            history.forEach(function(item) {
-                totalCal += item.calories; totalP += item.protein; totalF += item.fat;
-                totalC += item.carbs; totalXe += item.xe;
-            });
+            var tc=0,tp=0,tf=0,tc2=0,tx=0;
+            history.forEach(function(i){tc+=i.calories;tp+=i.protein;tf+=i.fat;tc2+=i.carbs;tx+=i.xe;});
             html += '<div class="totals"><h3>Итого за день:</h3>';
-            html += '<p><b>' + Math.round(totalCal) + ' ккал</b></p>';
-            html += '<p>Белки: ' + totalP.toFixed(1) + ' г | Жиры: ' + totalF.toFixed(1) + ' г | Углеводы: ' + totalC.toFixed(1) + ' г</p>';
-            html += '<p>Хлебные единицы: <b>' + totalXe.toFixed(1) + '</b></p></div>';
+            html += '<p><b>' + Math.round(tc) + ' ккал</b></p>';
+            html += '<p>Белки: ' + tp.toFixed(1) + ' г | Жиры: ' + tf.toFixed(1) + ' г | Углеводы: ' + tc2.toFixed(1) + ' г</p>';
+            html += '<p>Хлебные единицы: <b>' + tx.toFixed(1) + '</b></p></div>';
             html += '<button class="clear-btn" onclick="clearHistory()">Очистить историю</button>';
             block.innerHTML = html;
         }
@@ -422,83 +355,73 @@
             var days = [];
             var dayNames = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
             for (var i = 6; i >= 0; i--) {
-                var d = new Date();
-                d.setDate(d.getDate() - i);
+                var d = new Date(); d.setDate(d.getDate() - i);
                 var key = d.getFullYear() + '-' + (d.getMonth()+1).toString().padStart(2,'0') + '-' + d.getDate().toString().padStart(2,'0');
-                var dayName = dayNames[d.getDay()];
                 var total = 0;
-                history.forEach(function(item) {
-                    if (item.date === key) total += item.calories;
-                });
-                days.push({label: dayName, value: Math.round(total)});
+                history.forEach(function(item){ if (item.date === key) total += item.calories; });
+                days.push({label: dayNames[d.getDay()], value: Math.round(total)});
             }
-
             var isDark = document.body.classList.contains('dark');
             var textColor = isDark ? '#e8e8e8' : '#333';
             var gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)';
-
             var ctx = document.getElementById('calChart').getContext('2d');
             if (chartInstance) chartInstance.destroy();
             chartInstance = new Chart(ctx, {
                 type: 'bar',
-                data: {
-                    labels: days.map(d => d.label),
-                    datasets: [{
-                        label: 'ккал',
-                        data: days.map(d => d.value),
-                        backgroundColor: 'rgba(102,126,234,0.7)',
-                        borderColor: '#667eea',
-                        borderWidth: 2,
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, ticks: { color: textColor }, grid: { color: gridColor } },
-                        x: { ticks: { color: textColor }, grid: { display: false } }
-                    }
-                }
+                data: { labels: days.map(d=>d.label), datasets: [{ label: 'ккал', data: days.map(d=>d.value), backgroundColor: 'rgba(102,126,234,0.7)', borderColor: '#667eea', borderWidth: 2, borderRadius: 6 }] },
+                options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { display: false } } } }
             });
         }
 
         async function askAboutHistory() {
             var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
-            var goal = document.getElementById('goal').value;
-            var glucose = document.getElementById('glucose').value;
-            var target = document.getElementById('target').value;
-            var ratio = document.getElementById('ratio').value;
-            var timing = document.getElementById('timing').value;
             var block = document.getElementById('ai-analysis');
-            
-            if (history.length === 0) {
-                block.textContent = 'Сначала добавьте хотя бы одно блюдо.';
-                return;
-            }
-            block.textContent = '⏳ ИИ анализирует ваше питание... (10-30 секунд)';
+            if (history.length === 0) { block.textContent = 'Сначала добавьте хотя бы одно блюдо.'; return; }
+            block.textContent = '⏳ ИИ анализирует ваше питание... (10-30 сек)';
             try {
                 var res = await fetch('/ask_history', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
+                    method: 'POST', headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
                         history: history,
-                        goal: goal,
-                        glucose: glucose,
-                        target: target,
-                        ratio: ratio,
-                        timing: timing
+                        goal: document.getElementById('goal').value,
+                        glucose: document.getElementById('glucose').value,
+                        target: document.getElementById('target').value,
+                        ratio: document.getElementById('ratio').value,
+                        timing: document.getElementById('timing').value
                     })
                 });
                 var data = await res.json();
                 block.textContent = data.answer;
-            } catch (e) {
-                block.textContent = 'Ошибка связи с ИИ. Попробуйте ещё раз.';
-            }
+            } catch (e) { block.textContent = 'Ошибка связи с ИИ.'; }
         }
 
-        renderHistory();
-        renderChart();
+        async function sendEmailReport() {
+            var email = document.getElementById('emailTo').value.trim();
+            var status = document.getElementById('email-status');
+            var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
+            if (history.length === 0) { status.textContent = 'Сначала добавьте хотя бы одно блюдо.'; status.style.color = '#e53935'; return; }
+            if (!email || email.indexOf('@') === -1) { status.textContent = 'Введите корректный email'; status.style.color = '#e53935'; return; }
+            var text = 'ОТЧЁТ О ПИТАНИИ\n\n';
+            var tc=0,tp=0,tf=0,tc2=0,tx=0;
+            history.forEach(function(i){
+                text += '• ' + i.name + ' (' + i.grams + ' г) — Б ' + i.protein + ', Ж ' + i.fat + ', У ' + i.carbs + ', ХЕ ' + i.xe + ', ' + i.calories + ' ккал\n';
+                tc+=i.calories;tp+=i.protein;tf+=i.fat;tc2+=i.carbs;tx+=i.xe;
+            });
+            text += '\nИТОГО:\n' + Math.round(tc) + ' ккал\nБелки: ' + tp.toFixed(1) + ' г\nЖиры: ' + tf.toFixed(1) + ' г\nУглеводы: ' + tc2.toFixed(1) + ' г\nХлебные единицы: ' + tx.toFixed(1) + '\n\nСайт: my-nutrition-ai.relaxdev.ru\nРасчёты носят ознакомительный характер.';
+            status.textContent = '⏳ Отправляем...';
+            status.style.color = '#666';
+            try {
+                var res = await fetch('/send_email', {
+                    method: 'POST', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({to: email, content: text})
+                });
+                var data = await res.json();
+                if (data.ok) { status.textContent = '✅ Отчёт отправлен на ' + email; status.style.color = '#43a047'; }
+                else { status.textContent = '❌ ' + (data.error || 'Ошибка'); status.style.color = '#e53935'; }
+            } catch (e) { status.textContent = '❌ Ошибка соединения'; status.style.color = '#e53935'; }
+        }
+
+        renderHistory(); renderChart();
     </script>
 
     {% if results %}
@@ -509,18 +432,14 @@
             {% endfor %}
         ];
         newItems.forEach(function(item) { saveToHistory(item); });
-
         var resultsHtml = '<h2>📊 Результаты</h2>';
         newItems.forEach(function(item) {
-            resultsHtml += '<div class="result">';
-            resultsHtml += '<h3>' + item.name + ' (' + item.grams + ' г)</h3>';
+            resultsHtml += '<div class="result"><h3>' + item.name + ' (' + item.grams + ' г)</h3>';
             resultsHtml += '<div class="nutrient"><span>Белки</span><span>' + item.protein + ' г</span></div>';
             resultsHtml += '<div class="nutrient"><span>Жиры</span><span>' + item.fat + ' г</span></div>';
             resultsHtml += '<div class="nutrient"><span>Углеводы</span><span>' + item.carbs + ' г</span></div>';
-            resultsHtml += '<div class="cal-xe">';
-            resultsHtml += '<div class="cal-box"><span class="label">Калории</span><span class="value">' + item.calories + '</span></div>';
-            resultsHtml += '<div class="xe-box"><span class="label">ХЕ</span><span class="value">' + item.xe + '</span></div>';
-            resultsHtml += '</div></div>';
+            resultsHtml += '<div class="cal-xe"><div class="cal-box"><span class="label">Калории</span><span class="value">' + item.calories + '</span></div>';
+            resultsHtml += '<div class="xe-box"><span class="label">ХЕ</span><span class="value">' + item.xe + '</span></div></div></div>';
         });
         document.getElementById('resultsBlock').innerHTML = resultsHtml;
     </script>
