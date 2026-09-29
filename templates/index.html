@@ -98,17 +98,26 @@
         .close-scanner { background: #e53935; color: white; border: none; padding: 10px; border-radius: 8px; width: 100%; margin-top: 12px; cursor: pointer; font-weight: 600; }
         .listening { animation: pulse 1s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        @media (max-width: 900px) {
-            .wrapper { flex-direction: column; }
-            .history-column { flex: 1 1 auto; width: 100%; max-height: none; }
-        }
-        @media print {
-            body { background: white; padding: 0; }
-            .theme-toggle, .clear-btn, .add-btn, .remove-btn, .icon-btn, .install-btn,
-            .ai-block, .email-block, #mainForm, .chart-block, .export-block, .top-bar { display: none; }
-            .wrapper { flex-direction: column; }
-            .history-column, .main-column { box-shadow: none; }
-        }
+
+        /* ===== ПЕРСОНАЖ АПЕЛЬСИНЧИК ===== */
+        .mascot-container { position: fixed; bottom: 20px; right: 20px; z-index: 999; cursor: pointer; transition: transform 0.3s; }
+        .mascot-container:hover { transform: scale(1.1); }
+        .mascot-svg { width: 100px; height: 100px; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .mascot-chat { display: none; position: fixed; bottom: 130px; right: 20px; width: 320px; max-width: calc(100vw - 40px); background: var(--card-bg); border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 1000; overflow: hidden; }
+        .mascot-chat.active { display: block; }
+        .mascot-chat-header { background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%); color: white; padding: 12px 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .mascot-chat-close { background: none; border: none; color: white; font-size: 20px; cursor: pointer; line-height: 1; }
+        .mascot-chat-body { padding: 15px; max-height: 300px; overflow-y: auto; font-size: 14px; line-height: 1.5; }
+        .mascot-msg { margin-bottom: 10px; padding: 8px 12px; border-radius: 12px; max-width: 85%; }
+        .mascot-msg.user { background: #FFE0B2; color: #333; margin-left: auto; text-align: right; }
+        .mascot-msg.ai { background: var(--history-bg); color: var(--text); }
+        .mascot-chat-input { display: flex; padding: 10px; gap: 8px; border-top: 1px solid var(--border); }
+        .mascot-chat-input input { flex: 1; padding: 8px 12px; border: 2px solid var(--border); border-radius: 20px; font-size: 14px; background: var(--input-bg); color: var(--text); }
+        .mascot-chat-input button { background: #FF8C00; color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; font-weight: 600; }
+
+        @media (max-width: 900px) { .wrapper { flex-direction: column; } .history-column { flex: 1 1 auto; width: 100%; max-height: none; } }
+        @media print { body { background: white; padding: 0; } .theme-toggle, .clear-btn, .add-btn, .remove-btn, .icon-btn, .install-btn, .ai-block, .email-block, #mainForm, .chart-block, .export-block, .top-bar, .mascot-container, .mascot-chat { display: none; } .wrapper { flex-direction: column; } .history-column, .main-column { box-shadow: none; } }
     </style>
 </head>
 <body>
@@ -122,12 +131,10 @@
             <div class="history-column">
                 <h2>📜 Моя история</h2>
                 <div id="historyBlock"><div class="empty-history">Пока ничего не добавлено</div></div>
-
                 <div class="chart-block">
                     <h3>📊 Калории за неделю</h3>
                     <canvas id="calChart" height="150"></canvas>
                 </div>
-
                 <div class="export-block">
                     <h3>📄 Сохранить</h3>
                     <button class="export-btn" onclick="window.print()">Экспорт в PDF / печать</button>
@@ -149,7 +156,6 @@
                         </div>
                     </div>
                     <button type="button" class="add-btn" onclick="addRow()">+ Добавить ещё блюдо</button>
-
                     <button type="submit" id="calcBtn">Рассчитать всё</button>
                     <p id="loader" style="display:none;" class="loader">⏳ ИИ считает БЖУ... (10-30 сек)</p>
                 </form>
@@ -165,7 +171,6 @@
                         <option value="питаться правильно">Питаться правильно</option>
                         <option value="контролировать диабет">Контролировать диабет</option>
                     </select>
-
                     <div class="diabetes-box">
                         <p class="box-title">🩸 Для людей с диабетом (необязательно):</p>
                         <label>Текущий сахар (ммоль/л):</label>
@@ -183,7 +188,6 @@
                             <option value="перед сном">Перед сном</option>
                         </select>
                     </div>
-
                     <button type="button" onclick="askAboutHistory()" style="margin-top: 12px;">Проанализировать моё питание</button>
                     <p id="ai-analysis" style="margin-top: 15px;"></p>
                 </div>
@@ -206,6 +210,41 @@
             <h3>📷 Наведите камеру на штрихкод</h3>
             <div id="reader"></div>
             <button class="close-scanner" onclick="closeScanner()">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- АПЕЛЬСИНЧИК -->
+    <div class="mascot-container" onclick="toggleMascotChat()">
+        <svg class="mascot-svg" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="35" fill="#FFA500" stroke="#E67E00" stroke-width="2"/>
+            <circle cx="50" cy="50" r="32" fill="#FFB347"/>
+            <ellipse cx="38" cy="35" rx="10" ry="7" fill="#FFCC80" opacity="0.6"/>
+            <circle cx="38" cy="45" r="5" fill="white"/>
+            <circle cx="62" cy="45" r="5" fill="white"/>
+            <circle cx="39" cy="46" r="3" fill="#333"/>
+            <circle cx="63" cy="46" r="3" fill="#333"/>
+            <circle cx="40" cy="45" r="1" fill="white"/>
+            <circle cx="64" cy="45" r="1" fill="white"/>
+            <path d="M 38 58 Q 50 68 62 58" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <ellipse cx="15" cy="55" rx="10" ry="6" fill="#FFA500" stroke="#E67E00" stroke-width="1.5"/>
+            <ellipse cx="85" cy="55" rx="10" ry="6" fill="#FFA500" stroke="#E67E00" stroke-width="1.5"/>
+            <ellipse cx="38" cy="88" rx="9" ry="6" fill="#FFA500" stroke="#E67E00" stroke-width="1.5"/>
+            <ellipse cx="62" cy="88" rx="9" ry="6" fill="#FFA500" stroke="#E67E00" stroke-width="1.5"/>
+            <path d="M 50 15 Q 55 5 65 8 Q 58 15 50 15" fill="#4CAF50" stroke="#388E3C" stroke-width="1"/>
+        </svg>
+    </div>
+
+    <div class="mascot-chat" id="mascotChat">
+        <div class="mascot-chat-header">
+            🍊 Апельсинчик
+            <button class="mascot-chat-close" onclick="toggleMascotChat()">×</button>
+        </div>
+        <div class="mascot-chat-body" id="mascotChatBody">
+            <div class="mascot-msg ai">Привет! Я Апельсинчик 🍊 Спроси меня о чём угодно — про еду, здоровье или просто поболтаем!</div>
+        </div>
+        <div class="mascot-chat-input">
+            <input type="text" id="mascotInput" placeholder="Напиши вопрос..." onkeypress="if(event.key==='Enter') sendMascotMessage()">
+            <button onclick="sendMascotMessage()">→</button>
         </div>
     </div>
 
@@ -284,15 +323,9 @@
             scannerInstance.start(
                 { facingMode: "environment" },
                 { fps: 10, qrbox: { width: 250, height: 150 } },
-                (decodedText) => {
-                    closeScanner();
-                    lookupBarcode(decodedText);
-                },
+                (decodedText) => { closeScanner(); lookupBarcode(decodedText); },
                 () => {}
-            ).catch(err => {
-                alert('Не удалось открыть камеру: ' + err);
-                closeScanner();
-            });
+            ).catch(err => { alert('Не удалось открыть камеру: ' + err); closeScanner(); });
         }
         function closeScanner() {
             if (scannerInstance) {
@@ -419,6 +452,36 @@
                 if (data.ok) { status.textContent = '✅ Отчёт отправлен на ' + email; status.style.color = '#43a047'; }
                 else { status.textContent = '❌ ' + (data.error || 'Ошибка'); status.style.color = '#e53935'; }
             } catch (e) { status.textContent = '❌ Ошибка соединения'; status.style.color = '#e53935'; }
+        }
+
+        // ===== ЧАТ С АПЕЛЬСИНЧИКОМ =====
+        function toggleMascotChat() {
+            document.getElementById('mascotChat').classList.toggle('active');
+        }
+
+        async function sendMascotMessage() {
+            var input = document.getElementById('mascotInput');
+            var body = document.getElementById('mascotChatBody');
+            var msg = input.value.trim();
+            if (!msg) return;
+            body.innerHTML += '<div class="mascot-msg user">' + msg + '</div>';
+            input.value = '';
+            body.scrollTop = body.scrollHeight;
+            body.innerHTML += '<div class="mascot-msg ai" id="mascotTyping">...</div>';
+            body.scrollTop = body.scrollHeight;
+            try {
+                var res = await fetch('/chat', {
+                    method: 'POST', headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({message: msg})
+                });
+                var data = await res.json();
+                document.getElementById('mascotTyping').remove();
+                body.innerHTML += '<div class="mascot-msg ai">' + data.answer + '</div>';
+            } catch(e) {
+                document.getElementById('mascotTyping').remove();
+                body.innerHTML += '<div class="mascot-msg ai">Ой, я задумался... Попробуй ещё раз!</div>';
+            }
+            body.scrollTop = body.scrollHeight;
         }
 
         renderHistory(); renderChart();
