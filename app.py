@@ -113,6 +113,20 @@ def ask_history():
     answer = ask_ai(prompt)
     return jsonify({'answer': answer or 'ИИ сейчас загружен.'})
 
+# === ЧАТ С АПЕЛЬСИНЧИКОМ ===
+@app.route('/chat', methods=['POST'])
+def mascot_chat():
+    data = request.get_json()
+    message = data.get('message', '').strip()
+    if not message:
+        return jsonify({'answer': 'Напиши что-нибудь! 🍊'})
+    prompt = f"""Ты — милый апельсинчик по имени Апельсинчик. Ты живёшь на сайте-калькуляторе БЖУ и ХЕ.
+Отвечай коротко (2-4 предложения), дружелюбно, с юмором. Можешь использовать эмодзи.
+Ты помогаешь с вопросами о питании, здоровье, диабете, а также можешь просто поболтать.
+Вопрос пользователя: {message}"""
+    answer = ask_ai(prompt)
+    return jsonify({'answer': answer or 'Ой, я задумался... Попробуй ещё раз! 🍊'})
+
 # === ПОИСК ПРОДУКТА ПО ШТРИХКОДУ ===
 @app.route('/barcode/<code>')
 def barcode_lookup(code):
@@ -158,7 +172,7 @@ def send_email_route():
         print("Ошибка почты:", e)
         return jsonify({'error': f'Не удалось отправить: {str(e)}'}), 500
 
-# === PWA: раздача manifest и service worker ===
+# === PWA ===
 @app.route('/manifest.json')
 def manifest():
     return send_from_directory('static', 'manifest.json')
