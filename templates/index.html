@@ -101,28 +101,61 @@
 
         /* ===== ПЕРСОНАЖ АПЕЛЬСИНЧИК ===== */
         .mascot-container { position: fixed; bottom: 20px; right: 20px; z-index: 999; cursor: pointer; transition: transform 0.3s; }
-        .mascot-container:hover { transform: scale(1.1); }
-        .mascot-svg {
-            width: 128px;
-            height: 128px;
-            image-rendering: pixelated;
+        .mascot-container:hover { transform: scale(1.08); }
+
+        .mascot-float {
+            position: relative;
             animation: float 3s ease-in-out infinite;
         }
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-10px); }
         }
+
+        .mascot-svg {
+            width: 140px;
+            height: 140px;
+            image-rendering: pixelated;
+            display: block;
+            animation: wiggle 8s ease-in-out infinite;
+            transform-origin: 50% 90%;
+        }
+        @keyframes wiggle {
+            0%, 55%, 100% { transform: rotate(0deg); }
+            60%, 70% { transform: rotate(6deg); }
+            65%, 75% { transform: rotate(-6deg); }
+            85% { transform: rotate(0deg); }
+        }
+
         .mascot-body { transform-origin: 16px 16px; animation: breathe 2s ease-in-out infinite; }
         @keyframes breathe {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.04, 1.02); }
+            50% { transform: scale(1.05, 1.03); }
         }
+
         .mascot-eye { animation: blink 4s ease-in-out infinite; transform-origin: center; }
         @keyframes blink {
             0%, 90%, 100% { transform: scaleY(1); }
             95% { transform: scaleY(0.1); }
         }
-        .mascot-chat { display: none; position: fixed; bottom: 160px; right: 20px; width: 320px; max-width: calc(100vw - 40px); background: var(--card-bg); border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 1000; overflow: hidden; }
+
+        .mascot-heart {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 22px;
+            pointer-events: none;
+            opacity: 0;
+            animation: heartFloat 7s ease-in-out infinite;
+        }
+        @keyframes heartFloat {
+            0%, 60% { opacity: 0; transform: translate(0, 0) scale(0.4); }
+            65% { opacity: 1; transform: translate(0, -5px) scale(1); }
+            85% { opacity: 0.7; transform: translate(15px, -35px) scale(1); }
+            100% { opacity: 0; transform: translate(20px, -50px) scale(0.3); }
+        }
+
+        .mascot-chat { display: none; position: fixed; bottom: 175px; right: 20px; width: 320px; max-width: calc(100vw - 40px); background: var(--card-bg); border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 1000; overflow: hidden; }
         .mascot-chat.active { display: block; }
         .mascot-chat-header { background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%); color: white; padding: 12px 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
         .mascot-chat-close { background: none; border: none; color: white; font-size: 20px; cursor: pointer; line-height: 1; }
@@ -233,77 +266,94 @@
 
     <!-- АПЕЛЬСИНЧИК (пиксель-арт) -->
     <div class="mascot-container" onclick="toggleMascotChat()">
-        <svg class="mascot-svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
-            <rect x="15" y="2" width="2" height="1" fill="#4CAF50"/>
-            <rect x="17" y="3" width="2" height="1" fill="#4CAF50"/>
-            <rect x="14" y="3" width="1" height="1" fill="#388E3C"/>
-            <rect x="19" y="4" width="1" height="1" fill="#388E3C"/>
+        <div class="mascot-float">
+            <span class="mascot-heart">❤️</span>
+            <svg class="mascot-svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+                <rect x="15" y="2" width="2" height="1" fill="#4CAF50"/>
+                <rect x="17" y="3" width="2" height="1" fill="#4CAF50"/>
+                <rect x="14" y="3" width="1" height="1" fill="#388E3C"/>
+                <rect x="19" y="4" width="1" height="1" fill="#388E3C"/>
 
-            <g class="mascot-body">
-                <rect x="11" y="5" width="10" height="1" fill="#E67E00"/>
-                <rect x="9" y="6" width="14" height="1" fill="#E67E00"/>
-                <rect x="8" y="7" width="16" height="1" fill="#E67E00"/>
-                <rect x="7" y="8" width="18" height="1" fill="#E67E00"/>
-                <rect x="6" y="9" width="20" height="1" fill="#E67E00"/>
-                <rect x="6" y="10" width="20" height="1" fill="#E67E00"/>
-                <rect x="5" y="11" width="22" height="1" fill="#E67E00"/>
-                <rect x="5" y="12" width="22" height="1" fill="#E67E00"/>
-                <rect x="5" y="13" width="22" height="1" fill="#E67E00"/>
-                <rect x="5" y="14" width="22" height="1" fill="#E67E00"/>
-                <rect x="5" y="15" width="22" height="1" fill="#E67E00"/>
-                <rect x="5" y="16" width="22" height="1" fill="#E67E00"/>
-                <rect x="5" y="17" width="22" height="1" fill="#E67E00"/>
-                <rect x="5" y="18" width="22" height="1" fill="#E67E00"/>
-                <rect x="6" y="19" width="20" height="1" fill="#E67E00"/>
-                <rect x="6" y="20" width="20" height="1" fill="#E67E00"/>
-                <rect x="7" y="21" width="18" height="1" fill="#E67E00"/>
-                <rect x="8" y="22" width="16" height="1" fill="#E67E00"/>
-                <rect x="9" y="23" width="14" height="1" fill="#E67E00"/>
-                <rect x="11" y="24" width="10" height="1" fill="#E67E00"/>
+                <!-- Ножки БОЛЬШИЕ -->
+                <rect x="9" y="25" width="5" height="1" fill="#E67E00"/>
+                <rect x="8" y="26" width="7" height="1" fill="#E67E00"/>
+                <rect x="8" y="27" width="7" height="1" fill="#E67E00"/>
+                <rect x="9" y="28" width="5" height="1" fill="#E67E00"/>
+                <rect x="18" y="25" width="5" height="1" fill="#E67E00"/>
+                <rect x="17" y="26" width="7" height="1" fill="#E67E00"/>
+                <rect x="17" y="27" width="7" height="1" fill="#E67E00"/>
+                <rect x="18" y="28" width="5" height="1" fill="#E67E00"/>
 
-                <rect x="11" y="6" width="10" height="1" fill="#FFB347"/>
-                <rect x="9" y="7" width="14" height="1" fill="#FFB347"/>
-                <rect x="8" y="8" width="16" height="1" fill="#FFB347"/>
-                <rect x="7" y="9" width="18" height="1" fill="#FFB347"/>
-                <rect x="7" y="10" width="18" height="1" fill="#FFB347"/>
-                <rect x="6" y="11" width="20" height="1" fill="#FFB347"/>
-                <rect x="6" y="12" width="20" height="1" fill="#FFB347"/>
-                <rect x="6" y="13" width="20" height="1" fill="#FFB347"/>
-                <rect x="6" y="14" width="20" height="1" fill="#FFB347"/>
-                <rect x="6" y="15" width="20" height="1" fill="#FFB347"/>
-                <rect x="6" y="16" width="20" height="1" fill="#FFB347"/>
-                <rect x="6" y="17" width="20" height="1" fill="#FFB347"/>
-                <rect x="6" y="18" width="20" height="1" fill="#FFB347"/>
-                <rect x="7" y="19" width="18" height="1" fill="#FFB347"/>
-                <rect x="7" y="20" width="18" height="1" fill="#FFB347"/>
-                <rect x="8" y="21" width="16" height="1" fill="#FFB347"/>
-                <rect x="9" y="22" width="14" height="1" fill="#FFB347"/>
-                <rect x="11" y="23" width="10" height="1" fill="#FFB347"/>
+                <g class="mascot-body">
+                    <rect x="11" y="5" width="10" height="1" fill="#E67E00"/>
+                    <rect x="9" y="6" width="14" height="1" fill="#E67E00"/>
+                    <rect x="8" y="7" width="16" height="1" fill="#E67E00"/>
+                    <rect x="7" y="8" width="18" height="1" fill="#E67E00"/>
+                    <rect x="6" y="9" width="20" height="1" fill="#E67E00"/>
+                    <rect x="6" y="10" width="20" height="1" fill="#E67E00"/>
+                    <rect x="5" y="11" width="22" height="1" fill="#E67E00"/>
+                    <rect x="5" y="12" width="22" height="1" fill="#E67E00"/>
+                    <rect x="5" y="13" width="22" height="1" fill="#E67E00"/>
+                    <rect x="5" y="14" width="22" height="1" fill="#E67E00"/>
+                    <rect x="5" y="15" width="22" height="1" fill="#E67E00"/>
+                    <rect x="5" y="16" width="22" height="1" fill="#E67E00"/>
+                    <rect x="5" y="17" width="22" height="1" fill="#E67E00"/>
+                    <rect x="5" y="18" width="22" height="1" fill="#E67E00"/>
+                    <rect x="6" y="19" width="20" height="1" fill="#E67E00"/>
+                    <rect x="6" y="20" width="20" height="1" fill="#E67E00"/>
+                    <rect x="7" y="21" width="18" height="1" fill="#E67E00"/>
+                    <rect x="8" y="22" width="16" height="1" fill="#E67E00"/>
+                    <rect x="9" y="23" width="14" height="1" fill="#E67E00"/>
+                    <rect x="11" y="24" width="10" height="1" fill="#E67E00"/>
 
-                <rect x="10" y="9" width="2" height="1" fill="#FFD9A0"/>
-                <rect x="9" y="10" width="2" height="1" fill="#FFD9A0"/>
-                <rect x="9" y="11" width="1" height="1" fill="#FFD9A0"/>
+                    <rect x="11" y="6" width="10" height="1" fill="#FFB347"/>
+                    <rect x="9" y="7" width="14" height="1" fill="#FFB347"/>
+                    <rect x="8" y="8" width="16" height="1" fill="#FFB347"/>
+                    <rect x="7" y="9" width="18" height="1" fill="#FFB347"/>
+                    <rect x="7" y="10" width="18" height="1" fill="#FFB347"/>
+                    <rect x="6" y="11" width="20" height="1" fill="#FFB347"/>
+                    <rect x="6" y="12" width="20" height="1" fill="#FFB347"/>
+                    <rect x="6" y="13" width="20" height="1" fill="#FFB347"/>
+                    <rect x="6" y="14" width="20" height="1" fill="#FFB347"/>
+                    <rect x="6" y="15" width="20" height="1" fill="#FFB347"/>
+                    <rect x="6" y="16" width="20" height="1" fill="#FFB347"/>
+                    <rect x="6" y="17" width="20" height="1" fill="#FFB347"/>
+                    <rect x="6" y="18" width="20" height="1" fill="#FFB347"/>
+                    <rect x="7" y="19" width="18" height="1" fill="#FFB347"/>
+                    <rect x="7" y="20" width="18" height="1" fill="#FFB347"/>
+                    <rect x="8" y="21" width="16" height="1" fill="#FFB347"/>
+                    <rect x="9" y="22" width="14" height="1" fill="#FFB347"/>
+                    <rect x="11" y="23" width="10" height="1" fill="#FFB347"/>
 
-                <rect x="4" y="12" width="2" height="3" fill="#FFB347"/>
-                <rect x="26" y="12" width="2" height="3" fill="#FFB347"/>
+                    <rect x="10" y="9" width="2" height="1" fill="#FFD9A0"/>
+                    <rect x="9" y="10" width="2" height="1" fill="#FFD9A0"/>
+                    <rect x="9" y="11" width="1" height="1" fill="#FFD9A0"/>
 
-                <rect class="mascot-eye" x="11" y="11" width="2" height="4" fill="#1a1a1a"/>
-                <rect class="mascot-eye" x="19" y="11" width="2" height="4" fill="#1a1a1a"/>
-                <rect x="11" y="11" width="1" height="1" fill="white"/>
-                <rect x="19" y="11" width="1" height="1" fill="white"/>
+                    <!-- Ручки БОЛЬШИЕ -->
+                    <rect x="3" y="11" width="3" height="1" fill="#FFB347"/>
+                    <rect x="2" y="12" width="4" height="1" fill="#FFB347"/>
+                    <rect x="2" y="13" width="4" height="1" fill="#FFB347"/>
+                    <rect x="2" y="14" width="4" height="1" fill="#FFB347"/>
+                    <rect x="3" y="15" width="3" height="1" fill="#FFB347"/>
+                    <rect x="26" y="11" width="3" height="1" fill="#FFB347"/>
+                    <rect x="26" y="12" width="4" height="1" fill="#FFB347"/>
+                    <rect x="26" y="13" width="4" height="1" fill="#FFB347"/>
+                    <rect x="26" y="14" width="4" height="1" fill="#FFB347"/>
+                    <rect x="26" y="15" width="3" height="1" fill="#FFB347"/>
 
-                <rect x="7" y="16" width="2" height="1" fill="#FF6B6B" opacity="0.7"/>
-                <rect x="23" y="16" width="2" height="1" fill="#FF6B6B" opacity="0.7"/>
+                    <rect class="mascot-eye" x="11" y="11" width="2" height="4" fill="#1a1a1a"/>
+                    <rect class="mascot-eye" x="19" y="11" width="2" height="4" fill="#1a1a1a"/>
+                    <rect x="11" y="11" width="1" height="1" fill="white"/>
+                    <rect x="19" y="11" width="1" height="1" fill="white"/>
 
-                <rect x="14" y="18" width="4" height="1" fill="#333"/>
-                <rect x="15" y="19" width="2" height="1" fill="#333"/>
-            </g>
+                    <rect x="7" y="16" width="2" height="1" fill="#FF6B6B" opacity="0.7"/>
+                    <rect x="23" y="16" width="2" height="1" fill="#FF6B6B" opacity="0.7"/>
 
-            <rect x="11" y="25" width="4" height="3" fill="#E67E00"/>
-            <rect x="17" y="25" width="4" height="3" fill="#E67E00"/>
-            <rect x="11" y="25" width="4" height="1" fill="#FFB347"/>
-            <rect x="17" y="25" width="4" height="1" fill="#FFB347"/>
-        </svg>
+                    <rect x="14" y="18" width="4" height="1" fill="#333"/>
+                    <rect x="15" y="19" width="2" height="1" fill="#333"/>
+                </g>
+            </svg>
+        </div>
     </div>
 
     <div class="mascot-chat" id="mascotChat">
