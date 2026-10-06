@@ -7,37 +7,20 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥗</text></svg>">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#667eea">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="БЖУ и ХЕ">
-    <link rel="apple-touch-icon" href="/static/icon.svg">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <style>
-        :root {
-            --bg-grad: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --card-bg: #fff; --text: #333; --text-light: #666; --text-muted: #999;
-            --border: #e0e0e0; --input-bg: #fff; --history-bg: #f7f8fc;
-            --totals-bg: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-            --ai-bg: linear-gradient(135deg, #f3e5f5 0%, #ede7f6 100%);
-            --shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        body.dark {
-            --bg-grad: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            --card-bg: #1e2749; --text: #e8e8e8; --text-light: #b0b0b0; --text-muted: #888;
-            --border: #3a4570; --input-bg: #2a3456; --history-bg: #2a3456;
-            --totals-bg: linear-gradient(135deg, #1b3a2a 0%, #2a4a3a 100%);
-            --ai-bg: linear-gradient(135deg, #2a1e40 0%, #3a2a55 100%);
-            --shadow: 0 20px 60px rgba(0,0,0,0.6);
-        }
+        :root { --bg-grad: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --card-bg: #fff; --text: #333; --text-light: #666; --text-muted: #999; --border: #e0e0e0; --input-bg: #fff; --history-bg: #f7f8fc; --totals-bg: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); --ai-bg: linear-gradient(135deg, #f3e5f5 0%, #ede7f6 100%); --shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        body.dark { --bg-grad: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); --card-bg: #1e2749; --text: #e8e8e8; --text-light: #b0b0b0; --text-muted: #888; --border: #3a4570; --input-bg: #2a3456; --history-bg: #2a3456; --totals-bg: linear-gradient(135deg, #1b3a2a 0%, #2a4a3a 100%); --ai-bg: linear-gradient(135deg, #2a1e40 0%, #3a2a55 100%); --shadow: 0 20px 60px rgba(0,0,0,0.6); }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { min-height: 100vh; background: var(--bg-grad); padding: 20px; display: flex; justify-content: center; align-items: flex-start; transition: background 0.4s; color: var(--text); }
+        body { min-height: 100vh; background: var(--bg-grad); padding: 20px; display: flex; justify-content: center; align-items: flex-start; color: var(--text); }
         .wrapper { display: flex; gap: 20px; max-width: 1200px; width: 100%; align-items: flex-start; }
-        .history-column { flex: 0 0 340px; background: var(--card-bg); border-radius: 20px; padding: 25px; box-shadow: var(--shadow); max-height: calc(100vh - 40px); overflow-y: auto; transition: background 0.3s; }
-        .main-column { flex: 1; background: var(--card-bg); border-radius: 20px; padding: 35px; box-shadow: var(--shadow); min-width: 0; transition: background 0.3s; }
+        .history-column { flex: 0 0 340px; background: var(--card-bg); border-radius: 20px; padding: 25px; box-shadow: var(--shadow); max-height: calc(100vh - 40px); overflow-y: auto; }
+        .main-column { flex: 1; background: var(--card-bg); border-radius: 20px; padding: 35px; box-shadow: var(--shadow); min-width: 0; }
         h1 { text-align: center; color: var(--text); margin-bottom: 22px; font-size: 24px; }
         h2 { color: var(--text); font-size: 19px; margin: 20px 0 12px; }
         label { display: block; margin-bottom: 6px; color: var(--text-light); font-weight: 500; font-size: 14px; }
-        input[type="text"], input[type="number"], input[type="email"], select { padding: 11px 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 15px; width: 100%; background: var(--input-bg); color: var(--text); transition: border 0.3s; }
+        input[type="text"], input[type="number"], input[type="email"], select { padding: 11px 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 15px; width: 100%; background: var(--input-bg); color: var(--text); }
         input:focus, select:focus { outline: none; border-color: #667eea; }
         .dish-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; }
         .dish-row input[type="text"] { flex: 1; }
@@ -48,7 +31,6 @@
         .icon-btn.cam { background: #7e57c2; }
         .add-btn { background: #66bb6a; color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; margin-bottom: 14px; }
         button[type="submit"] { width: 100%; padding: 13px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; }
-        button[type="submit"]:disabled { opacity: 0.6; cursor: wait; }
         .result { margin-top: 12px; padding: 16px; background: var(--history-bg); border-radius: 15px; border-left: 5px solid #667eea; }
         .result h3 { color: var(--text); font-size: 17px; margin-bottom: 10px; }
         .nutrient { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
@@ -98,9 +80,8 @@
         .listening { animation: pulse 1s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-        /* ===== АПЕЛЬСИНЧИК ===== */
-        .mascot-container { position: fixed; bottom: 20px; right: 20px; z-index: 999; cursor: pointer; transition: transform 0.3s; }
-        .mascot-container:hover { transform: scale(1.08); }
+        /* ===== АПЕЛЬСИНЧИК (сайт) ===== */
+        .mascot-container { position: fixed; bottom: 20px; right: 20px; z-index: 999; cursor: pointer; }
         .mascot-float { position: relative; animation: float 3s ease-in-out infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         .mascot-svg { width: 140px; height: 140px; display: block; animation: wiggle 8s ease-in-out infinite; transform-origin: 50% 90%; }
@@ -109,12 +90,11 @@
         @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03, 1.02); } }
         .mascot-eye { animation: blink 4s ease-in-out infinite; transform-origin: center; }
         @keyframes blink { 0%, 90%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
-        .mascot-heart { position: absolute; top: 10px; right: 15px; font-size: 22px; pointer-events: none; opacity: 0; animation: heartFloat 7s ease-in-out infinite; }
-        @keyframes heartFloat { 0%, 60% { opacity: 0; transform: translate(0, 0) scale(0.4); } 65% { opacity: 1; transform: translate(0, -5px) scale(1); } 85% { opacity: 0.7; transform: translate(15px, -35px) scale(1); } 100% { opacity: 0; transform: translate(20px, -50px) scale(0.3); } }
+        .mascot-decoration { position: absolute; pointer-events: none; z-index: 10; }
         .mascot-chat { display: none; position: fixed; bottom: 175px; right: 20px; width: 320px; max-width: calc(100vw - 40px); background: var(--card-bg); border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 1000; overflow: hidden; }
         .mascot-chat.active { display: block; }
         .mascot-chat-header { background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%); color: white; padding: 12px 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
-        .mascot-chat-close { background: none; border: none; color: white; font-size: 20px; cursor: pointer; line-height: 1; }
+        .mascot-chat-close { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
         .mascot-chat-body { padding: 15px; max-height: 300px; overflow-y: auto; font-size: 14px; line-height: 1.5; }
         .mascot-msg { margin-bottom: 10px; padding: 8px 12px; border-radius: 12px; max-width: 85%; }
         .mascot-msg.user { background: #FFE0B2; color: #333; margin-left: auto; text-align: right; }
@@ -125,19 +105,55 @@
 
         /* ===== ИГРА ===== */
         .game-btn { background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%); color: white; border: none; border-radius: 50px; padding: 12px 24px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 20px rgba(255,140,0,0.4); }
-        .game-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, #FFD9A0 0%, #FFA500 100%); z-index: 2000; overflow: hidden; touch-action: manipulation; }
+        .game-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, #87CEEB 0%, #FFD9A0 100%); z-index: 2000; overflow: hidden; touch-action: none; }
         .game-overlay.active { display: block; }
         .game-hud { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; z-index: 10; pointer-events: none; }
         .coins-counter { background: rgba(0,0,0,0.6); color: white; padding: 8px 18px; border-radius: 50px; font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
         .game-close { background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 22px; cursor: pointer; pointer-events: auto; }
         .game-area { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
-        .flying-item { position: absolute; font-size: 40px; cursor: pointer; user-select: none; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3)); }
-        .game-player { position: absolute; bottom: 20px; left: 30px; width: 110px; height: 110px; z-index: 5; animation: playerBob 0.6s ease-in-out infinite; }
-        @keyframes playerBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+        /* ЗЕМЛЯ */
+        .game-ground { position: absolute; bottom: 0; left: 0; width: 100%; height: 90px; background: linear-gradient(180deg, #8BC34A 0%, #558B2F 100%); border-top: 4px solid #33691E; z-index: 2; }
+
+        /* ПАДАЮЩИЕ ПРЕДМЕТЫ */
+        .falling-item {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            z-index: 3;
+            pointer-events: none;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        }
+
+        /* МОНЕТКА */
+        .coin-svg { width: 50px; height: 50px; animation: coinSpin 1.2s linear infinite; }
+        @keyframes coinSpin { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+
+        /* ЗВЁЗДОЧКА */
+        .star-svg { width: 50px; height: 50px; animation: starSpin 3s linear infinite; }
+        @keyframes starSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* ИГРОК (апельсинчик в игре) */
+        .game-player {
+            position: absolute;
+            bottom: 60px;
+            width: 110px;
+            height: 110px;
+            z-index: 5;
+            transform: translateX(-50%);
+            transition: transform 0.15s ease-out;
+        }
+        .game-player.jumping { transform: translateX(-50%) translateY(-70px); }
+        .game-player svg { width: 100%; height: 100%; }
+        .game-player .player-deco { position: absolute; pointer-events: none; z-index: 10; }
+
+        /* ЭФФЕКТЫ */
         @keyframes popEffect { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
-        .item-pop { position: absolute; font-size: 40px; pointer-events: none; animation: popEffect 0.5s ease-out forwards; }
-        @keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-60px); opacity: 0; } }
-        .float-text { position: absolute; color: #FFD700; font-weight: 900; font-size: 24px; text-shadow: 2px 2px 0 #1a1a1a; pointer-events: none; animation: floatUp 0.8s ease-out forwards; }
+        .item-pop { position: absolute; font-size: 40px; pointer-events: none; animation: popEffect 0.5s ease-out forwards; z-index: 6; }
+        @keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-80px); opacity: 0; } }
+        .float-text { position: absolute; color: #FFD700; font-weight: 900; font-size: 26px; text-shadow: 3px 3px 0 #1a1a1a; pointer-events: none; animation: floatUp 0.9s ease-out forwards; z-index: 7; }
+
+        /* МАГАЗИН */
         .shop-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2100; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
         .shop-overlay.active { display: flex; }
         .shop-panel { background: #fff; border-radius: 20px; padding: 24px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
@@ -189,14 +205,14 @@
                         <div class="dish-row">
                             <input type="text" name="dish" placeholder="Например: банан" required>
                             <input type="number" name="grams" value="150" min="1" required>
-                            <button type="button" class="icon-btn mic" onclick="startVoice(this)" title="Голосовой ввод">🎤</button>
-                            <button type="button" class="icon-btn cam" onclick="openScanner()" title="Сканировать штрихкод">📷</button>
+                            <button type="button" class="icon-btn mic" onclick="startVoice(this)">🎤</button>
+                            <button type="button" class="icon-btn cam" onclick="openScanner()">📷</button>
                             <button type="button" class="remove-btn" onclick="removeRow(this)">✕</button>
                         </div>
                     </div>
                     <button type="button" class="add-btn" onclick="addRow()">+ Добавить ещё блюдо</button>
                     <button type="submit" id="calcBtn">Рассчитать всё</button>
-                    <p id="loader" style="display:none;" class="loader">⏳ ИИ считает БЖУ... (10-30 сек)</p>
+                    <p id="loader" style="display:none;" class="loader">⏳ ИИ считает БЖУ...</p>
                 </form>
 
                 <div id="resultsBlock"></div>
@@ -252,12 +268,11 @@
         </div>
     </div>
 
-    <!-- АПЕЛЬСИНЧИК -->
+    <!-- АПЕЛЬСИНЧИК НА САЙТЕ -->
     <div class="mascot-container" id="mascotContainer" onclick="toggleMascotChat()">
         <div class="mascot-float">
-            <span class="mascot-heart">❤️</span>
             <svg class="mascot-svg" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-                <path d="M 64 22 Q 70 6 86 10 Q 78 22 64 22 Z" fill="#4CAF50" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+                <path d="M 64 22 Q 70 6 86 10 Q 78 22 64 22 Z" fill="#4CAF50" stroke="#1a1a1a" stroke-width="3"/>
                 <ellipse cx="42" cy="112" rx="24" ry="14" fill="#FF8C00" stroke="#1a1a1a" stroke-width="3"/>
                 <ellipse cx="86" cy="112" rx="24" ry="14" fill="#FF8C00" stroke="#1a1a1a" stroke-width="3"/>
                 <ellipse cx="38" cy="108" rx="12" ry="4" fill="#FFB347" opacity="0.8"/>
@@ -309,6 +324,7 @@
             </div>
         </div>
         <div class="game-area" id="gameArea">
+            <div class="game-ground"></div>
             <div class="game-player" id="gamePlayer"></div>
         </div>
     </div>
@@ -336,241 +352,98 @@
             document.body.classList.add('dark');
             document.querySelector('.theme-toggle').textContent = '☀️ Светлая тема';
         }
-
-        // === PWA ===
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js').catch(e => console.log('SW:', e));
-        }
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(e => {});
         let deferredPrompt = null;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('installBtn').style.display = 'inline-block';
-        });
-        function installPWA() {
-            if (!deferredPrompt) { alert('Приложение уже установлено'); return; }
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then(() => { deferredPrompt = null; document.getElementById('installBtn').style.display = 'none'; });
-        }
-
-        // === ДОБАВЛЕНИЕ СТРОК ===
-        function addRow() {
-            var list = document.getElementById('dishList');
-            var row = document.createElement('div');
-            row.className = 'dish-row';
-            row.innerHTML = '<input type="text" name="dish" placeholder="Ещё одно блюдо" required>' +
-                '<input type="number" name="grams" value="150" min="1" required>' +
-                '<button type="button" class="icon-btn mic" onclick="startVoice(this)">🎤</button>' +
-                '<button type="button" class="icon-btn cam" onclick="openScanner()">📷</button>' +
-                '<button type="button" class="remove-btn" onclick="removeRow(this)">✕</button>';
-            list.appendChild(row);
-        }
-        function removeRow(btn) {
-            var list = document.getElementById('dishList');
-            if (list.children.length > 1) btn.parentElement.remove();
-            else alert('Должно остаться хотя бы одно поле');
-        }
-        function showLoader() {
-            document.getElementById('loader').style.display = 'block';
-            document.getElementById('calcBtn').disabled = true;
-            document.getElementById('calcBtn').textContent = '⏳ Считаем...';
-        }
-
-        // === ГОЛОС ===
+        window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; document.getElementById('installBtn').style.display = 'inline-block'; });
+        function installPWA() { if (!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.then(() => { deferredPrompt = null; document.getElementById('installBtn').style.display = 'none'; }); }
+        function addRow() { var l = document.getElementById('dishList'); var r = document.createElement('div'); r.className = 'dish-row'; r.innerHTML = '<input type="text" name="dish" placeholder="Ещё одно блюдо" required><input type="number" name="grams" value="150" min="1" required><button type="button" class="icon-btn mic" onclick="startVoice(this)">🎤</button><button type="button" class="icon-btn cam" onclick="openScanner()">📷</button><button type="button" class="remove-btn" onclick="removeRow(this)">✕</button>'; l.appendChild(r); }
+        function removeRow(b) { var l = document.getElementById('dishList'); if (l.children.length > 1) b.parentElement.remove(); else alert('Должно остаться хотя бы одно поле'); }
+        function showLoader() { document.getElementById('loader').style.display = 'block'; document.getElementById('calcBtn').disabled = true; document.getElementById('calcBtn').textContent = '⏳ Считаем...'; }
         function startVoice(btn) {
             const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SR) { alert('Голосовой ввод не поддерживается'); return; }
-            const recognition = new SR();
-            recognition.lang = 'ru-RU';
-            recognition.interimResults = false;
-            btn.classList.add('listening');
-            btn.textContent = '🔴';
-            recognition.onresult = (event) => {
-                const text = event.results[0][0].transcript;
-                const input = btn.parentElement.querySelector('input[name="dish"]');
-                input.value = text;
-            };
-            recognition.onend = () => { btn.classList.remove('listening'); btn.textContent = '🎤'; };
-            recognition.onerror = () => { btn.classList.remove('listening'); btn.textContent = '🎤'; };
-            recognition.start();
+            const r = new SR(); r.lang = 'ru-RU';
+            btn.classList.add('listening'); btn.textContent = '🔴';
+            r.onresult = (e) => { btn.parentElement.querySelector('input[name="dish"]').value = e.results[0][0].transcript; };
+            r.onend = () => { btn.classList.remove('listening'); btn.textContent = '🎤'; };
+            r.onerror = () => { btn.classList.remove('listening'); btn.textContent = '🎤'; };
+            r.start();
         }
-
-        // === СКАНЕР ===
         let scannerInstance = null;
         function openScanner() {
             document.getElementById('scannerModal').classList.add('active');
             scannerInstance = new Html5Qrcode("reader");
-            scannerInstance.start(
-                { facingMode: "environment" },
-                { fps: 10, qrbox: { width: 250, height: 150 } },
-                (decodedText) => { closeScanner(); lookupBarcode(decodedText); },
-                () => {}
-            ).catch(err => { alert('Камера: ' + err); closeScanner(); });
+            scannerInstance.start({ facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 150 } }, (t) => { closeScanner(); lookupBarcode(t); }, () => {}).catch(e => { alert('Камера: ' + e); closeScanner(); });
         }
-        function closeScanner() {
-            if (scannerInstance) {
-                scannerInstance.stop().then(() => { scannerInstance.clear(); scannerInstance = null; });
-            }
-            document.getElementById('scannerModal').classList.remove('active');
-        }
+        function closeScanner() { if (scannerInstance) { scannerInstance.stop().then(() => { scannerInstance.clear(); scannerInstance = null; }); } document.getElementById('scannerModal').classList.remove('active'); }
         async function lookupBarcode(code) {
-            try {
-                const res = await fetch('/barcode/' + code);
-                const data = await res.json();
-                if (data.error) { alert('Продукт не найден'); return; }
-                document.querySelector('input[name="dish"]').value = data.name;
-                document.querySelector('input[name="grams"]').value = 100;
-                alert('Найдено: ' + data.name);
-            } catch (e) { alert('Ошибка поиска'); }
+            try { const r = await fetch('/barcode/' + code); const d = await r.json(); if (d.error) { alert('Не найдено'); return; } document.querySelector('input[name="dish"]').value = d.name; document.querySelector('input[name="grams"]').value = 100; alert('Найдено: ' + d.name); } catch(e) { alert('Ошибка'); }
         }
-
-        // === ИСТОРИЯ ===
-        function getTodayKey() {
-            var d = new Date();
-            return d.getFullYear() + '-' + (d.getMonth()+1).toString().padStart(2,'0') + '-' + d.getDate().toString().padStart(2,'0');
-        }
-        function saveToHistory(item) {
-            item.date = getTodayKey();
-            var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
-            history.push(item);
-            localStorage.setItem('foodHistory', JSON.stringify(history));
-            renderHistory(); renderChart();
-        }
-        function clearHistory() {
-            if (confirm('Очистить всю историю?')) {
-                localStorage.removeItem('foodHistory');
-                renderHistory(); renderChart();
-            }
-        }
+        function getTodayKey() { var d = new Date(); return d.getFullYear() + '-' + (d.getMonth()+1).toString().padStart(2,'0') + '-' + d.getDate().toString().padStart(2,'0'); }
+        function saveToHistory(item) { item.date = getTodayKey(); var h = JSON.parse(localStorage.getItem('foodHistory') || '[]'); h.push(item); localStorage.setItem('foodHistory', JSON.stringify(h)); renderHistory(); renderChart(); }
+        function clearHistory() { if (confirm('Очистить всю историю?')) { localStorage.removeItem('foodHistory'); renderHistory(); renderChart(); } }
         function renderHistory() {
-            var block = document.getElementById('historyBlock');
-            var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
-            if (history.length === 0) { block.innerHTML = '<div class="empty-history">Пока ничего не добавлено</div>'; return; }
+            var b = document.getElementById('historyBlock'); var h = JSON.parse(localStorage.getItem('foodHistory') || '[]');
+            if (h.length === 0) { b.innerHTML = '<div class="empty-history">Пока ничего не добавлено</div>'; return; }
             var html = '';
-            history.forEach(function(item) {
-                html += '<div class="history-item"><div><div class="name">' + item.name + ' (' + item.grams + ' г)</div>';
-                html += '<div class="info">Б ' + item.protein + ' | Ж ' + item.fat + ' | У ' + item.carbs + ' | ХЕ ' + item.xe + '</div></div>';
-                html += '<div class="name">' + item.calories + '</div></div>';
-            });
+            h.forEach(i => { html += '<div class="history-item"><div><div class="name">' + i.name + ' (' + i.grams + ' г)</div><div class="info">Б ' + i.protein + ' | Ж ' + i.fat + ' | У ' + i.carbs + ' | ХЕ ' + i.xe + '</div></div><div class="name">' + i.calories + '</div></div>'; });
             var tc=0,tp=0,tf=0,tc2=0,tx=0;
-            history.forEach(function(i){tc+=i.calories;tp+=i.protein;tf+=i.fat;tc2+=i.carbs;tx+=i.xe;});
-            html += '<div class="totals"><h3>Итого за день:</h3>';
-            html += '<p><b>' + Math.round(tc) + ' ккал</b></p>';
-            html += '<p>Белки: ' + tp.toFixed(1) + ' г | Жиры: ' + tf.toFixed(1) + ' г | Углеводы: ' + tc2.toFixed(1) + ' г</p>';
-            html += '<p>Хлебные единицы: <b>' + tx.toFixed(1) + '</b></p></div>';
+            h.forEach(i => { tc+=i.calories; tp+=i.protein; tf+=i.fat; tc2+=i.carbs; tx+=i.xe; });
+            html += '<div class="totals"><h3>Итого за день:</h3><p><b>' + Math.round(tc) + ' ккал</b></p><p>Белки: ' + tp.toFixed(1) + ' г | Жиры: ' + tf.toFixed(1) + ' г | Углеводы: ' + tc2.toFixed(1) + ' г</p><p>Хлебные единицы: <b>' + tx.toFixed(1) + '</b></p></div>';
             html += '<button class="clear-btn" onclick="clearHistory()">Очистить историю</button>';
-            block.innerHTML = html;
+            b.innerHTML = html;
         }
-
-        // === ГРАФИК ===
         var chartInstance = null;
         function renderChart() {
-            var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
-            var days = [];
-            var dayNames = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+            var h = JSON.parse(localStorage.getItem('foodHistory') || '[]');
+            var days = []; var dn = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
             for (var i = 6; i >= 0; i--) {
                 var d = new Date(); d.setDate(d.getDate() - i);
-                var key = d.getFullYear() + '-' + (d.getMonth()+1).toString().padStart(2,'0') + '-' + d.getDate().toString().padStart(2,'0');
-                var total = 0;
-                history.forEach(function(item){ if (item.date === key) total += item.calories; });
-                days.push({label: dayNames[d.getDay()], value: Math.round(total)});
+                var k = d.getFullYear() + '-' + (d.getMonth()+1).toString().padStart(2,'0') + '-' + d.getDate().toString().padStart(2,'0');
+                var t = 0; h.forEach(it => { if (it.date === k) t += it.calories; });
+                days.push({label: dn[d.getDay()], value: Math.round(t)});
             }
             var isDark = document.body.classList.contains('dark');
-            var textColor = isDark ? '#e8e8e8' : '#333';
-            var gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)';
+            var tc = isDark ? '#e8e8e8' : '#333'; var gc = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)';
             var ctx = document.getElementById('calChart').getContext('2d');
             if (chartInstance) chartInstance.destroy();
-            chartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: { labels: days.map(d=>d.label), datasets: [{ label: 'ккал', data: days.map(d=>d.value), backgroundColor: 'rgba(102,126,234,0.7)', borderColor: '#667eea', borderWidth: 2, borderRadius: 6 }] },
-                options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { display: false } } } }
-            });
+            chartInstance = new Chart(ctx, { type: 'bar', data: { labels: days.map(d=>d.label), datasets: [{ label: 'ккал', data: days.map(d=>d.value), backgroundColor: 'rgba(102,126,234,0.7)', borderColor: '#667eea', borderWidth: 2, borderRadius: 6 }] }, options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { color: tc }, grid: { color: gc } }, x: { ticks: { color: tc }, grid: { display: false } } } } });
         }
-
-        // === АНАЛИЗ ИИ ===
         async function askAboutHistory() {
-            var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
-            var block = document.getElementById('ai-analysis');
-            if (history.length === 0) { block.textContent = 'Сначала добавьте блюдо.'; return; }
-            block.textContent = '⏳ ИИ анализирует...';
-            try {
-                var res = await fetch('/ask_history', {
-                    method: 'POST', headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        history: history,
-                        goal: document.getElementById('goal').value,
-                        glucose: document.getElementById('glucose').value,
-                        target: document.getElementById('target').value,
-                        ratio: document.getElementById('ratio').value,
-                        timing: document.getElementById('timing').value
-                    })
-                });
-                var data = await res.json();
-                block.textContent = data.answer;
-            } catch (e) { block.textContent = 'Ошибка связи с ИИ.'; }
+            var h = JSON.parse(localStorage.getItem('foodHistory') || '[]'); var b = document.getElementById('ai-analysis');
+            if (h.length === 0) { b.textContent = 'Сначала добавьте блюдо.'; return; }
+            b.textContent = '⏳ ИИ анализирует...';
+            try { var r = await fetch('/ask_history', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ history: h, goal: document.getElementById('goal').value, glucose: document.getElementById('glucose').value, target: document.getElementById('target').value, ratio: document.getElementById('ratio').value, timing: document.getElementById('timing').value }) }); var d = await r.json(); b.textContent = d.answer; } catch(e) { b.textContent = 'Ошибка.'; }
         }
-
-        // === ПОЧТА ===
         async function sendEmailReport() {
-            var email = document.getElementById('emailTo').value.trim();
-            var status = document.getElementById('email-status');
-            var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
-            if (history.length === 0) { status.textContent = 'Сначала добавьте блюдо.'; return; }
-            if (!email || email.indexOf('@') === -1) { status.textContent = 'Введите корректный email'; return; }
-            var text = 'ОТЧЁТ О ПИТАНИИ\n\n';
-            var tc=0,tp=0,tf=0,tc2=0,tx=0;
-            history.forEach(function(i){
-                text += '• ' + i.name + ' (' + i.grams + ' г) — Б ' + i.protein + ', Ж ' + i.fat + ', У ' + i.carbs + ', ХЕ ' + i.xe + ', ' + i.calories + ' ккал\n';
-                tc+=i.calories;tp+=i.protein;tf+=i.fat;tc2+=i.carbs;tx+=i.xe;
-            });
-            text += '\nИТОГО:\n' + Math.round(tc) + ' ккал\nБелки: ' + tp.toFixed(1) + ' г\nЖиры: ' + tf.toFixed(1) + ' г\nУглеводы: ' + tc2.toFixed(1) + ' г\nХЕ: ' + tx.toFixed(1);
-            status.textContent = '⏳ Отправляем...';
-            try {
-                var res = await fetch('/send_email', {
-                    method: 'POST', headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({to: email, content: text})
-                });
-                var data = await res.json();
-                if (data.ok) { status.textContent = '✅ Отправлено на ' + email; }
-                else { status.textContent = '❌ ' + (data.error || 'Ошибка'); }
-            } catch (e) { status.textContent = '❌ Ошибка соединения'; }
+            var e = document.getElementById('emailTo').value.trim(); var s = document.getElementById('email-status'); var h = JSON.parse(localStorage.getItem('foodHistory') || '[]');
+            if (h.length === 0) { s.textContent = 'Добавьте блюдо.'; return; }
+            if (!e || e.indexOf('@') === -1) { s.textContent = 'Введите email'; return; }
+            var t = 'ОТЧЁТ О ПИТАНИИ\n\n'; var tc=0,tp=0,tf=0,tc2=0,tx=0;
+            h.forEach(i => { t += '• ' + i.name + ' (' + i.grams + ' г) — Б ' + i.protein + ', Ж ' + i.fat + ', У ' + i.carbs + ', ХЕ ' + i.xe + ', ' + i.calories + ' ккал\n'; tc+=i.calories;tp+=i.protein;tf+=i.fat;tc2+=i.carbs;tx+=i.xe; });
+            t += '\nИТОГО: ' + Math.round(tc) + ' ккал, Б ' + tp.toFixed(1) + ', Ж ' + tf.toFixed(1) + ', У ' + tc2.toFixed(1) + ', ХЕ ' + tx.toFixed(1);
+            s.textContent = '⏳ Отправляем...';
+            try { var r = await fetch('/send_email', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({to: e, content: t}) }); var d = await r.json(); if (d.ok) s.textContent = '✅ Отправлено'; else s.textContent = '❌ ' + (d.error || 'Ошибка'); } catch(e) { s.textContent = '❌ Ошибка'; }
         }
-
-        // === АПЕЛЬСИНЧИК ЧАТ ===
-        function toggleMascotChat() {
-            document.getElementById('mascotChat').classList.toggle('active');
-        }
+        function toggleMascotChat() { document.getElementById('mascotChat').classList.toggle('active'); }
         async function sendMascotMessage() {
-            var input = document.getElementById('mascotInput');
-            var body = document.getElementById('mascotChatBody');
-            var msg = input.value.trim();
-            if (!msg) return;
-            body.innerHTML += '<div class="mascot-msg user">' + msg + '</div>';
-            input.value = '';
-            body.scrollTop = body.scrollHeight;
-            body.innerHTML += '<div class="mascot-msg ai" id="mascotTyping">...</div>';
-            body.scrollTop = body.scrollHeight;
-            try {
-                var res = await fetch('/chat', {
-                    method: 'POST', headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({message: msg})
-                });
-                var data = await res.json();
-                document.getElementById('mascotTyping').remove();
-                body.innerHTML += '<div class="mascot-msg ai">' + data.answer + '</div>';
-            } catch(e) {
-                document.getElementById('mascotTyping').remove();
-                body.innerHTML += '<div class="mascot-msg ai">Ой, я задумался...</div>';
-            }
-            body.scrollTop = body.scrollHeight;
+            var i = document.getElementById('mascotInput'); var b = document.getElementById('mascotChatBody'); var m = i.value.trim();
+            if (!m) return;
+            b.innerHTML += '<div class="mascot-msg user">' + m + '</div>'; i.value = ''; b.scrollTop = b.scrollHeight;
+            b.innerHTML += '<div class="mascot-msg ai" id="mascotTyping">...</div>'; b.scrollTop = b.scrollHeight;
+            try { var r = await fetch('/chat', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({message: m}) }); var d = await r.json(); document.getElementById('mascotTyping').remove(); b.innerHTML += '<div class="mascot-msg ai">' + d.answer + '</div>'; } catch(e) { document.getElementById('mascotTyping').remove(); b.innerHTML += '<div class="mascot-msg ai">Ошибка.</div>'; }
+            b.scrollTop = b.scrollHeight;
         }
 
-        // === ИГРА ===
+        // ===== ИГРА =====
         let coins = parseInt(localStorage.getItem('mascotCoins') || '0');
         let ownedItems = JSON.parse(localStorage.getItem('mascotOwned') || '[]');
         let equippedItems = JSON.parse(localStorage.getItem('mascotEquipped') || '[]');
         let gameRunning = false;
-        let gameLoopId = null;
+        let spawnTimer = null;
+        let gameItems = [];
+        let playerX = 50;
+        let isJumping = false;
 
         const SHOP_ITEMS = [
             { id: 'hat',    emoji: '🎩', name: 'Цилиндр',        price: 10 },
@@ -582,92 +455,231 @@
             { id: 'headph', emoji: '🎧', name: 'Наушники',       price: 30 },
             { id: 'cap2',   emoji: '🎓', name: 'Академ. шапка',  price: 40 }
         ];
-        const ITEM_EMOJIS = ['🪙', '⭐', '🍎', '🍊', '🍌', '🪙', '⭐', '🍇'];
+
+        // Тип предметов: монетки и звёздочки (свои SVG)
+        const ITEM_TYPES = [
+            { type: 'coin', value: 1 },
+            { type: 'coin', value: 1 },
+            { type: 'coin', value: 1 },
+            { type: 'star', value: 3 }
+        ];
+
+        function makeCoinSVG() {
+            return '<svg class="coin-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="28" fill="#FFD700" stroke="#B8860B" stroke-width="4"/><circle cx="32" cy="32" r="22" fill="#FFC107" stroke="#FFD700" stroke-width="2"/><text x="32" y="42" font-size="28" font-weight="900" text-anchor="middle" fill="#B8860B">₽</text></svg>';
+        }
+        function makeStarSVG() {
+            return '<svg class="star-svg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><polygon points="32,4 39,24 60,24 43,37 49,58 32,46 15,58 21,37 4,24 25,24" fill="#FFD700" stroke="#B8860B" stroke-width="3" stroke-linejoin="round"/></svg>';
+        }
+
+        // SVG игрока (апельсинчик)
+        function makePlayerSVG(withDeco) {
+            var decoHTML = '';
+            if (withDeco) {
+                equippedItems.forEach(id => {
+                    const item = SHOP_ITEMS.find(i => i.id === id);
+                    if (!item) return;
+                    var style = '';
+                    if (['hat', 'cap', 'crown', 'cap2'].includes(id)) style = 'top: -20%; left: 50%; transform: translateX(-50%); font-size: 32px;';
+                    else if (id === 'glasses') style = 'top: 38%; left: 50%; transform: translateX(-50%); font-size: 28px;';
+                    else if (id === 'scarf') style = 'bottom: 15%; left: 50%; transform: translateX(-50%); font-size: 28px;';
+                    else if (id === 'bow') style = 'top: 10%; right: 8%; font-size: 28px;';
+                    else if (id === 'headph') style = 'top: 22%; left: 50%; transform: translateX(-50%); font-size: 36px;';
+                    decoHTML += '<div class="player-deco" style="position:absolute;' + style + '">' + item.emoji + '</div>';
+                });
+            }
+            return '<div style="position:relative;width:100%;height:100%;">' +
+                '<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">' +
+                '<path d="M 64 22 Q 70 6 86 10 Q 78 22 64 22 Z" fill="#4CAF50" stroke="#1a1a1a" stroke-width="3"/>' +
+                '<ellipse cx="42" cy="112" rx="24" ry="14" fill="#FF8C00" stroke="#1a1a1a" stroke-width="3"/>' +
+                '<ellipse cx="86" cy="112" rx="24" ry="14" fill="#FF8C00" stroke="#1a1a1a" stroke-width="3"/>' +
+                '<ellipse cx="18" cy="74" rx="15" ry="11" fill="#FFA500" stroke="#1a1a1a" stroke-width="3"/>' +
+                '<ellipse cx="110" cy="74" rx="15" ry="11" fill="#FFA500" stroke="#1a1a1a" stroke-width="3"/>' +
+                '<circle cx="64" cy="72" r="46" fill="#FFA500" stroke="#1a1a1a" stroke-width="3"/>' +
+                '<circle cx="64" cy="72" r="43" fill="#FFB347"/>' +
+                '<ellipse cx="46" cy="46" rx="16" ry="10" fill="#FFD9A0" opacity="0.7"/>' +
+                '<ellipse cx="52" cy="66" rx="7" ry="14" fill="#1a1a1a"/>' +
+                '<ellipse cx="76" cy="66" rx="7" ry="14" fill="#1a1a1a"/>' +
+                '<ellipse cx="50" cy="58" rx="3" ry="5" fill="#ffffff"/>' +
+                '<ellipse cx="74" cy="58" rx="3" ry="5" fill="#ffffff"/>' +
+                '<ellipse cx="35" cy="84" rx="8" ry="4" fill="#FF6B6B" opacity="0.6"/>' +
+                '<ellipse cx="93" cy="84" rx="8" ry="4" fill="#FF6B6B" opacity="0.6"/>' +
+                '<path d="M 58 86 Q 64 92 70 86" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+                '</svg>' + decoHTML + '</div>';
+        }
 
         function openGame() {
             document.getElementById('gameOverlay').classList.add('active');
             document.getElementById('coinsDisplay').textContent = coins;
             gameRunning = true;
+            playerX = 50;
+            isJumping = false;
+            renderPlayer();
             spawnLoop();
-            gameLoop();
+            requestAnimationFrame(gameLoop);
         }
+
         function closeGame() {
             gameRunning = false;
             document.getElementById('gameOverlay').classList.remove('active');
-            clearTimeout(gameLoopId);
-            document.querySelectorAll('.flying-item').forEach(el => el.remove());
+            clearTimeout(spawnTimer);
+            document.querySelectorAll('.falling-item').forEach(el => el.remove());
+            document.querySelectorAll('.item-pop').forEach(el => el.remove());
+            document.querySelectorAll('.float-text').forEach(el => el.remove());
+            gameItems = [];
         }
+
+        function renderPlayer() {
+            var p = document.getElementById('gamePlayer');
+            p.innerHTML = makePlayerSVG(true);
+            p.style.left = playerX + '%';
+        }
+
         function spawnLoop() {
             if (!gameRunning) return;
             spawnItem();
-            gameLoopId = setTimeout(spawnLoop, 700 + Math.random() * 500);
+            spawnTimer = setTimeout(spawnLoop, 1200 + Math.random() * 800);
         }
+
         function spawnItem() {
             if (!gameRunning) return;
             const area = document.getElementById('gameArea');
-            const emoji = ITEM_EMOJIS[Math.floor(Math.random() * ITEM_EMOJIS.length)];
+            const typeData = ITEM_TYPES[Math.floor(Math.random() * ITEM_TYPES.length)];
             const item = document.createElement('div');
-            item.className = 'flying-item';
-            item.textContent = emoji;
-            item.style.top = (60 + Math.random() * (area.clientHeight - 250)) + 'px';
-            item.style.left = (area.clientWidth + 40) + 'px';
-            item.onclick = (e) => collectItem(e, item);
+            item.className = 'falling-item';
+            item.innerHTML = typeData.type === 'coin' ? makeCoinSVG() : makeStarSVG();
+            const startX = 15 + Math.random() * 70;
+            item.style.left = startX + '%';
+            item.style.top = '-60px';
             area.appendChild(item);
+            gameItems.push({
+                el: item,
+                x: startX,
+                y: -60,
+                value: typeData.value,
+                speed: 1.5 + Math.random() * 0.8
+            });
         }
+
         function gameLoop() {
             if (!gameRunning) return;
             const area = document.getElementById('gameArea');
-            area.querySelectorAll('.flying-item').forEach(item => {
-                const next = parseFloat(item.style.left) - 3;
-                if (next < -60) item.remove();
-                else item.style.left = next + 'px';
+            const areaHeight = area.clientHeight;
+            const groundY = areaHeight - 150; // где стоит апельсинчик
+
+            gameItems = gameItems.filter(it => {
+                it.y += it.speed;
+                it.el.style.top = it.y + 'px';
+
+                // Проверка столкновения
+                const playerEl = document.getElementById('gamePlayer');
+                const px = playerX;
+                const playerLeft = px - 7;
+                const playerRight = px + 7;
+                const playerBottom = areaHeight - 170;
+                const playerTop = playerBottom - 110;
+
+                const itemX = it.x;
+                const itemY = it.y;
+
+                // Если предмет в зоне X игрока и коснулся его
+                if (itemX >= playerLeft - 3 && itemX <= playerRight + 3 && itemY >= playerTop && itemY <= playerBottom) {
+                    collectItem(it);
+                    return false;
+                }
+
+                // Ушёл за нижнюю границу
+                if (it.y > areaHeight) {
+                    it.el.remove();
+                    return false;
+                }
+                return true;
             });
+
             requestAnimationFrame(gameLoop);
         }
-        function collectItem(event, item) {
-            event.stopPropagation();
-            coins++;
+
+        function collectItem(it) {
+            coins += it.value;
             localStorage.setItem('mascotCoins', coins);
             document.getElementById('coinsDisplay').textContent = coins;
+
+            // Эффект
+            const area = document.getElementById('gameArea');
             const pop = document.createElement('div');
             pop.className = 'item-pop';
-            pop.textContent = item.textContent;
-            pop.style.left = item.style.left;
-            pop.style.top = item.style.top;
-            document.getElementById('gameArea').appendChild(pop);
+            pop.textContent = it.value > 1 ? '⭐' : '🪙';
+            pop.style.left = it.x + '%';
+            pop.style.top = it.y + 'px';
+            area.appendChild(pop);
             setTimeout(() => pop.remove(), 500);
-            const float = document.createElement('div');
-            float.className = 'float-text';
-            float.textContent = '+1';
-            float.style.left = item.style.left;
-            float.style.top = item.style.top;
-            document.getElementById('gameArea').appendChild(float);
-            setTimeout(() => float.remove(), 800);
-            item.remove();
+
+            const fl = document.createElement('div');
+            fl.className = 'float-text';
+            fl.textContent = '+' + it.value;
+            fl.style.left = it.x + '%';
+            fl.style.top = it.y + 'px';
+            area.appendChild(fl);
+            setTimeout(() => fl.remove(), 900);
+
+            it.el.remove();
+
+            // Апельсинчик прыгает
+            jumpPlayer();
         }
-        function openShop() {
-            document.getElementById('shopCoins').textContent = coins;
-            renderShop();
-            document.getElementById('shopOverlay').classList.add('active');
+
+        function jumpPlayer() {
+            if (isJumping) return;
+            isJumping = true;
+            const p = document.getElementById('gamePlayer');
+            p.classList.add('jumping');
+            setTimeout(() => {
+                p.classList.remove('jumping');
+                setTimeout(() => { isJumping = false; }, 150);
+            }, 200);
         }
-        function closeShop() {
-            document.getElementById('shopOverlay').classList.remove('active');
-        }
+
+        // Управление игроком — свайп/тап влево-вправо
+        document.addEventListener('mousemove', (e) => {
+            if (!gameRunning) return;
+            const area = document.getElementById('gameArea');
+            const rect = area.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            playerX = Math.max(8, Math.min(92, x));
+            renderPlayer();
+        });
+        document.addEventListener('touchmove', (e) => {
+            if (!gameRunning) return;
+            const area = document.getElementById('gameArea');
+            const rect = area.getBoundingClientRect();
+            const t = e.touches[0];
+            const x = ((t.clientX - rect.left) / rect.width) * 100;
+            playerX = Math.max(8, Math.min(92, x));
+            renderPlayer();
+        }, { passive: true });
+        document.addEventListener('touchstart', (e) => {
+            if (!gameRunning) return;
+            const area = document.getElementById('gameArea');
+            const rect = area.getBoundingClientRect();
+            const t = e.touches[0];
+            const x = ((t.clientX - rect.left) / rect.width) * 100;
+            playerX = Math.max(8, Math.min(92, x));
+            renderPlayer();
+        }, { passive: true });
+
+        // ===== МАГАЗИН =====
+        function openShop() { document.getElementById('shopCoins').textContent = coins; renderShop(); document.getElementById('shopOverlay').classList.add('active'); }
+        function closeShop() { document.getElementById('shopOverlay').classList.remove('active'); }
         function renderShop() {
-            const grid = document.getElementById('shopGrid');
-            grid.innerHTML = '';
+            const g = document.getElementById('shopGrid'); g.innerHTML = '';
             SHOP_ITEMS.forEach(item => {
                 const owned = ownedItems.includes(item.id);
-                const equipped = equippedItems.includes(item.id);
-                const div = document.createElement('div');
-                div.className = 'shop-item' + (owned ? ' owned' : '') + (equipped ? ' equipped' : '');
-                div.innerHTML = '<span class="item-emoji">' + item.emoji + '</span>' +
-                    '<div class="item-name">' + item.name + '</div>' +
-                    (owned 
-                        ? '<div class="item-price">Куплено ✅</div><button class="' + (equipped ? 'unequip' : 'equip') + '" onclick="toggleEquip(\'' + item.id + '\')">' + (equipped ? 'Снять' : 'Надеть') + '</button>'
-                        : '<div class="item-price">🪙 ' + item.price + '</div><button onclick="buyItem(\'' + item.id + '\')">Купить</button>'
-                    );
-                grid.appendChild(div);
+                const eq = equippedItems.includes(item.id);
+                const d = document.createElement('div');
+                d.className = 'shop-item' + (owned ? ' owned' : '') + (eq ? ' equipped' : '');
+                d.innerHTML = '<span class="item-emoji">' + item.emoji + '</span><div class="item-name">' + item.name + '</div>' +
+                    (owned ? '<div class="item-price">Куплено ✅</div><button class="' + (eq ? 'unequip' : 'equip') + '" onclick="toggleEquip(\'' + item.id + '\')">' + (eq ? 'Снять' : 'Надеть') + '</button>'
+                           : '<div class="item-price">🪙 ' + item.price + '</div><button onclick="buyItem(\'' + item.id + '\')">Купить</button>');
+                g.appendChild(d);
             });
         }
         function buyItem(id) {
@@ -683,45 +695,41 @@
             renderShop();
         }
         function toggleEquip(id) {
-            if (equippedItems.includes(id)) {
-                equippedItems = equippedItems.filter(i => i !== id);
-            } else {
-                equippedItems.push(id);
-            }
+            if (equippedItems.includes(id)) equippedItems = equippedItems.filter(i => i !== id);
+            else equippedItems.push(id);
             localStorage.setItem('mascotEquipped', JSON.stringify(equippedItems));
             renderShop();
-            renderPlayerDecorations();
+            renderPlayer();
+            updateMascotSiteDecorations();
         }
-        function renderPlayerDecorations() {
-            document.querySelectorAll('.mascot-decoration').forEach(el => el.remove());
-            const player = document.getElementById('mascotContainer');
-            if (!player) return;
+
+        // ===== УКРАШЕНИЯ НА САЙТЕ (рядом с апельсинчиком) =====
+        function updateMascotSiteDecorations() {
+            // Убираем старые украшения внутри контейнера
+            document.querySelectorAll('#mascotContainer .mascot-decoration').forEach(el => el.remove());
+            const float = document.querySelector('#mascotContainer .mascot-float');
+            if (!float) return;
             equippedItems.forEach(id => {
                 const item = SHOP_ITEMS.find(i => i.id === id);
                 if (!item) return;
                 const el = document.createElement('div');
                 el.className = 'mascot-decoration';
-                el.style.cssText = 'position: absolute; font-size: 32px; pointer-events: none; z-index: 10;';
-                if (['hat', 'cap', 'crown', 'cap2'].includes(id)) {
-                    el.style.cssText += 'top: -18px; left: 50%; transform: translateX(-50%);';
-                } else if (id === 'glasses') {
-                    el.style.cssText += 'top: 38%; left: 50%; transform: translateX(-50%);';
-                } else if (id === 'scarf') {
-                    el.style.cssText += 'bottom: 20px; left: 50%; transform: translateX(-50%);';
-                } else if (id === 'bow') {
-                    el.style.cssText += 'top: 15%; right: 5px;';
-                } else if (id === 'headph') {
-                    el.style.cssText += 'top: 25%; left: 50%; transform: translateX(-50%); font-size: 40px;';
-                }
+                let style = 'font-size: 32px; ';
+                if (['hat', 'cap', 'crown', 'cap2'].includes(id)) style += 'top: -10px; left: 50%; transform: translateX(-50%);';
+                else if (id === 'glasses') style += 'top: 42%; left: 50%; transform: translateX(-50%); font-size: 28px;';
+                else if (id === 'scarf') style += 'bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 28px;';
+                else if (id === 'bow') style += 'top: 15%; right: 5px; font-size: 26px;';
+                else if (id === 'headph') style += 'top: 22%; left: 50%; transform: translateX(-50%); font-size: 40px;';
+                el.style.cssText += style;
                 el.textContent = item.emoji;
-                player.style.position = 'relative';
-                player.appendChild(el);
+                float.appendChild(el);
             });
         }
 
+        // Инициализация
         renderHistory();
         renderChart();
-        renderPlayerDecorations();
+        updateMascotSiteDecorations();
     </script>
 
     {% if results %}
@@ -731,9 +739,9 @@
             {name: "{{ item.name }}", grams: {{ item.grams }}, protein: {{ item.protein }}, fat: {{ item.fat }}, carbs: {{ item.carbs }}, xe: {{ item.xe }}, calories: {{ item.calories }}},
             {% endfor %}
         ];
-        newItems.forEach(function(item) { saveToHistory(item); });
+        newItems.forEach(item => saveToHistory(item));
         var resultsHtml = '<h2>📊 Результаты</h2>';
-        newItems.forEach(function(item) {
+        newItems.forEach(item => {
             resultsHtml += '<div class="result"><h3>' + item.name + ' (' + item.grams + ' г)</h3>';
             resultsHtml += '<div class="nutrient"><span>Белки</span><span>' + item.protein + ' г</span></div>';
             resultsHtml += '<div class="nutrient"><span>Жиры</span><span>' + item.fat + ' г</span></div>';
