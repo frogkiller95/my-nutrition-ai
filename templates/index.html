@@ -43,8 +43,7 @@
         .dish-row input[type="text"] { flex: 1; }
         .dish-row input[type="number"] { width: 100px; }
         .remove-btn { background: #ef5350; color: white; border: none; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; flex-shrink: 0; }
-        .icon-btn { background: #42a5f5; color: white; border: none; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; flex-shrink: 0; font-size: 16px; transition: transform 0.2s; }
-        .icon-btn:hover { transform: scale(1.1); }
+        .icon-btn { background: #42a5f5; color: white; border: none; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; flex-shrink: 0; font-size: 16px; }
         .icon-btn.mic { background: #ef5350; }
         .icon-btn.cam { background: #7e57c2; }
         .add-btn { background: #66bb6a; color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; margin-bottom: 14px; }
@@ -84,7 +83,7 @@
         .clear-btn { background: #e53935; margin-top: 10px; padding: 8px; color: white; border: none; border-radius: 8px; font-size: 13px; cursor: pointer; width: 100%; }
         .loader { color: #667eea; font-weight: 600; text-align: center; margin-top: 10px; }
         .top-bar { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; width: 100%; margin-bottom: 15px; padding: 0 10px; gap: 10px; flex-wrap: wrap; }
-        .theme-toggle, .install-btn { background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4); color: white; padding: 8px 14px; border-radius: 50px; cursor: pointer; font-size: 15px; font-weight: 600; backdrop-filter: blur(10px); }
+        .theme-toggle, .install-btn { background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.4); color: white; padding: 8px 14px; border-radius: 50px; cursor: pointer; font-size: 15px; font-weight: 600; }
         .install-btn { background: rgba(102,187,106,0.5); display: none; }
         .page-wrap { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 1200px; }
         .chart-block, .export-block { margin-top: 20px; padding: 18px; background: var(--history-bg); border-radius: 15px; border-left: 5px solid #42a5f5; }
@@ -99,62 +98,19 @@
         .listening { animation: pulse 1s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-        /* ===== ПЕРСОНАЖ АПЕЛЬСИНЧИК ===== */
+        /* ===== АПЕЛЬСИНЧИК ===== */
         .mascot-container { position: fixed; bottom: 20px; right: 20px; z-index: 999; cursor: pointer; transition: transform 0.3s; }
         .mascot-container:hover { transform: scale(1.08); }
-
-        .mascot-float {
-            position: relative;
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .mascot-svg {
-            width: 140px;
-            height: 140px;
-            image-rendering: pixelated;
-            display: block;
-            animation: wiggle 8s ease-in-out infinite;
-            transform-origin: 50% 90%;
-        }
-        @keyframes wiggle {
-            0%, 55%, 100% { transform: rotate(0deg); }
-            60%, 70% { transform: rotate(6deg); }
-            65%, 75% { transform: rotate(-6deg); }
-            85% { transform: rotate(0deg); }
-        }
-
-        .mascot-body { transform-origin: 16px 16px; animation: breathe 2s ease-in-out infinite; }
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05, 1.03); }
-        }
-
+        .mascot-float { position: relative; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .mascot-svg { width: 140px; height: 140px; display: block; animation: wiggle 8s ease-in-out infinite; transform-origin: 50% 90%; }
+        @keyframes wiggle { 0%, 55%, 100% { transform: rotate(0deg); } 60%, 70% { transform: rotate(6deg); } 65%, 75% { transform: rotate(-6deg); } 85% { transform: rotate(0deg); } }
+        .mascot-body { transform-origin: 64px 72px; animation: breathe 2s ease-in-out infinite; }
+        @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03, 1.02); } }
         .mascot-eye { animation: blink 4s ease-in-out infinite; transform-origin: center; }
-        @keyframes blink {
-            0%, 90%, 100% { transform: scaleY(1); }
-            95% { transform: scaleY(0.1); }
-        }
-
-        .mascot-heart {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 22px;
-            pointer-events: none;
-            opacity: 0;
-            animation: heartFloat 7s ease-in-out infinite;
-        }
-        @keyframes heartFloat {
-            0%, 60% { opacity: 0; transform: translate(0, 0) scale(0.4); }
-            65% { opacity: 1; transform: translate(0, -5px) scale(1); }
-            85% { opacity: 0.7; transform: translate(15px, -35px) scale(1); }
-            100% { opacity: 0; transform: translate(20px, -50px) scale(0.3); }
-        }
-
+        @keyframes blink { 0%, 90%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+        .mascot-heart { position: absolute; top: 10px; right: 15px; font-size: 22px; pointer-events: none; opacity: 0; animation: heartFloat 7s ease-in-out infinite; }
+        @keyframes heartFloat { 0%, 60% { opacity: 0; transform: translate(0, 0) scale(0.4); } 65% { opacity: 1; transform: translate(0, -5px) scale(1); } 85% { opacity: 0.7; transform: translate(15px, -35px) scale(1); } 100% { opacity: 0; transform: translate(20px, -50px) scale(0.3); } }
         .mascot-chat { display: none; position: fixed; bottom: 175px; right: 20px; width: 320px; max-width: calc(100vw - 40px); background: var(--card-bg); border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 1000; overflow: hidden; }
         .mascot-chat.active { display: block; }
         .mascot-chat-header { background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%); color: white; padding: 12px 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
@@ -167,49 +123,41 @@
         .mascot-chat-input input { flex: 1; padding: 8px 12px; border: 2px solid var(--border); border-radius: 20px; font-size: 14px; background: var(--input-bg); color: var(--text); }
         .mascot-chat-input button { background: #FF8C00; color: white; border: none; border-radius: 20px; padding: 8px 16px; cursor: pointer; font-weight: 600; }
 
+        /* ===== ИГРА ===== */
+        .game-btn { background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%); color: white; border: none; border-radius: 50px; padding: 12px 24px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 20px rgba(255,140,0,0.4); }
+        .game-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, #FFD9A0 0%, #FFA500 100%); z-index: 2000; overflow: hidden; touch-action: manipulation; }
+        .game-overlay.active { display: block; }
+        .game-hud { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; z-index: 10; pointer-events: none; }
+        .coins-counter { background: rgba(0,0,0,0.6); color: white; padding: 8px 18px; border-radius: 50px; font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .game-close { background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 22px; cursor: pointer; pointer-events: auto; }
+        .game-area { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
+        .flying-item { position: absolute; font-size: 40px; cursor: pointer; user-select: none; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3)); }
+        .game-player { position: absolute; bottom: 20px; left: 30px; width: 110px; height: 110px; z-index: 5; animation: playerBob 0.6s ease-in-out infinite; }
+        @keyframes playerBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes popEffect { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
+        .item-pop { position: absolute; font-size: 40px; pointer-events: none; animation: popEffect 0.5s ease-out forwards; }
+        @keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-60px); opacity: 0; } }
+        .float-text { position: absolute; color: #FFD700; font-weight: 900; font-size: 24px; text-shadow: 2px 2px 0 #1a1a1a; pointer-events: none; animation: floatUp 0.8s ease-out forwards; }
+        .shop-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2100; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
+        .shop-overlay.active { display: flex; }
+        .shop-panel { background: #fff; border-radius: 20px; padding: 24px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+        .shop-title { text-align: center; font-size: 22px; margin-bottom: 6px; color: #333; font-weight: 700; }
+        .shop-subtitle { text-align: center; color: #666; margin-bottom: 18px; font-size: 14px; }
+        .shop-close { position: absolute; top: 12px; right: 12px; background: #ef5350; color: white; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; cursor: pointer; }
+        .shop-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .shop-item { background: #f7f8fc; border-radius: 14px; padding: 14px; text-align: center; border: 3px solid transparent; }
+        .shop-item.owned { border-color: #66bb6a; background: #e8f5e9; }
+        .shop-item.equipped { border-color: #FFA500; background: #fff3e0; }
+        .shop-item .item-emoji { font-size: 40px; display: block; margin-bottom: 6px; }
+        .shop-item .item-name { font-size: 13px; color: #333; font-weight: 600; margin-bottom: 6px; }
+        .shop-item .item-price { font-size: 14px; color: #FF8C00; font-weight: 700; }
+        .shop-item button { width: 100%; padding: 8px; margin-top: 6px; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%); color: white; }
+        .shop-item button.equip { background: #66bb6a; }
+        .shop-item button.unequip { background: #78909c; }
+
         @media (max-width: 900px) { .wrapper { flex-direction: column; } .history-column { flex: 1 1 auto; width: 100%; max-height: none; } }
-        @media print { body { background: white; padding: 0; } .theme-toggle, .clear-btn, .add-btn, .remove-btn, .icon-btn, .install-btn, .ai-block, .email-block, #mainForm, .chart-block, .export-block, .top-bar, .mascot-container, .mascot-chat { display: none; } .wrapper { flex-direction: column; } .history-column, .main-column { box-shadow: none; } }
+        @media print { body { background: white; padding: 0; } .theme-toggle, .clear-btn, .add-btn, .remove-btn, .icon-btn, .install-btn, .ai-block, .email-block, #mainForm, .chart-block, .export-block, .top-bar, .mascot-container, .mascot-chat, .game-btn { display: none; } .wrapper { flex-direction: column; } .history-column, .main-column { box-shadow: none; } }
     </style>
-    /* ===== ИГРА ===== */
-.game-btn {
-    background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%);
-    color: white; border: none; border-radius: 50px;
-    padding: 12px 24px; font-size: 16px; font-weight: 700;
-    cursor: pointer; box-shadow: 0 6px 20px rgba(255,140,0,0.4);
-    transition: transform 0.2s;
-}
-.game-btn:hover { transform: translateY(-2px); }
-.game-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, #FFD9A0 0%, #FFA500 100%); z-index: 2000; overflow: hidden; touch-action: manipulation; }
-.game-overlay.active { display: block; }
-.game-hud { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; z-index: 10; pointer-events: none; }
-.coins-counter { background: rgba(0,0,0,0.6); color: white; padding: 8px 18px; border-radius: 50px; font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-.game-close { background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 22px; cursor: pointer; pointer-events: auto; }
-.game-area { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
-.flying-item { position: absolute; font-size: 40px; cursor: pointer; user-select: none; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3)); transition: transform 0.1s; will-change: left; }
-.flying-item:active { transform: scale(1.3); }
-@keyframes popEffect { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
-.item-pop { position: absolute; font-size: 40px; pointer-events: none; animation: popEffect 0.5s ease-out forwards; }
-.game-player { position: absolute; bottom: 20px; left: 30px; width: 110px; height: 110px; z-index: 5; animation: playerBob 0.6s ease-in-out infinite; }
-@keyframes playerBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-@keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-60px); opacity: 0; } }
-.float-text { position: absolute; color: #FFD700; font-weight: 900; font-size: 24px; text-shadow: 2px 2px 0 #1a1a1a; pointer-events: none; animation: floatUp 0.8s ease-out forwards; }
-.shop-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2100; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
-.shop-overlay.active { display: flex; }
-.shop-panel { background: #fff; border-radius: 20px; padding: 24px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
-.shop-title { text-align: center; font-size: 22px; margin-bottom: 6px; color: #333; font-weight: 700; }
-.shop-subtitle { text-align: center; color: #666; margin-bottom: 18px; font-size: 14px; }
-.shop-close { position: absolute; top: 12px; right: 12px; background: #ef5350; color: white; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; cursor: pointer; }
-.shop-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-.shop-item { background: #f7f8fc; border-radius: 14px; padding: 14px; text-align: center; border: 3px solid transparent; transition: all 0.2s; }
-.shop-item.owned { border-color: #66bb6a; background: #e8f5e9; }
-.shop-item.equipped { border-color: #FFA500; background: #fff3e0; }
-.shop-item .item-emoji { font-size: 40px; display: block; margin-bottom: 6px; }
-.shop-item .item-name { font-size: 13px; color: #333; font-weight: 600; margin-bottom: 6px; }
-.shop-item .item-price { font-size: 14px; color: #FF8C00; font-weight: 700; }
-.shop-item button { width: 100%; padding: 8px; margin-top: 6px; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%); color: white; }
-.shop-item button:disabled { background: #ccc; cursor: not-allowed; }
-.shop-item button.equip { background: #66bb6a; }
-.shop-item button.unequip { background: #78909c; }
 </head>
 <body>
     <div class="page-wrap">
@@ -304,46 +252,31 @@
         </div>
     </div>
 
-    <!-- АПЕЛЬСИНЧИК (пиксель-арт) -->
-  <div class="mascot-container" id="mascotContainer" onclick="toggleMascotChat()">
+    <!-- АПЕЛЬСИНЧИК -->
+    <div class="mascot-container" id="mascotContainer" onclick="toggleMascotChat()">
         <div class="mascot-float">
             <span class="mascot-heart">❤️</span>
-    <svg class="mascot-svg" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-    <!-- ЛИСТИК на макушке -->
-    <path d="M 64 22 Q 70 6 86 10 Q 78 22 64 22 Z" fill="#4CAF50" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
-
-    <!-- НОЖКИ (большие, позади тела) -->
-    <ellipse cx="42" cy="112" rx="24" ry="14" fill="#FF8C00" stroke="#1a1a1a" stroke-width="3"/>
-    <ellipse cx="86" cy="112" rx="24" ry="14" fill="#FF8C00" stroke="#1a1a1a" stroke-width="3"/>
-    <!-- блики на ножках -->
-    <ellipse cx="38" cy="108" rx="12" ry="4" fill="#FFB347" opacity="0.8"/>
-    <ellipse cx="82" cy="108" rx="12" ry="4" fill="#FFB347" opacity="0.8"/>
-
-    <!-- РУЧКИ (маленькие, по бокам) -->
-    <ellipse cx="18" cy="74" rx="15" ry="11" fill="#FFA500" stroke="#1a1a1a" stroke-width="3"/>
-    <ellipse cx="110" cy="74" rx="15" ry="11" fill="#FFA500" stroke="#1a1a1a" stroke-width="3"/>
-
-    <!-- ТЕЛО (круглое, как у Кирби) -->
-    <circle cx="64" cy="72" r="46" fill="#FFA500" stroke="#1a1a1a" stroke-width="3"/>
-    <circle cx="64" cy="72" r="43" fill="#FFB347"/>
-
-    <!-- БЛИК на теле (сверху слева) -->
-    <ellipse cx="46" cy="46" rx="16" ry="10" fill="#FFD9A0" opacity="0.7"/>
-
-    <!-- ГЛАЗА (большие вертикальные овалы) -->
-    <ellipse cx="52" cy="66" rx="7" ry="14" fill="#1a1a1a"/>
-    <ellipse cx="76" cy="66" rx="7" ry="14" fill="#1a1a1a"/>
-    <!-- белые блики в глазах -->
-    <ellipse cx="50" cy="58" rx="3" ry="5" fill="#ffffff"/>
-    <ellipse cx="74" cy="58" rx="3" ry="5" fill="#ffffff"/>
-
-    <!-- РУМЯНЫЕ ЩЁЧКИ -->
-    <ellipse cx="35" cy="84" rx="8" ry="4" fill="#FF6B6B" opacity="0.6"/>
-    <ellipse cx="93" cy="84" rx="8" ry="4" fill="#FF6B6B" opacity="0.6"/>
-
-    <!-- РОТИК (улыбка) -->
-    <path d="M 58 86 Q 64 92 70 86" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
-</svg>
+            <svg class="mascot-svg" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 64 22 Q 70 6 86 10 Q 78 22 64 22 Z" fill="#4CAF50" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+                <ellipse cx="42" cy="112" rx="24" ry="14" fill="#FF8C00" stroke="#1a1a1a" stroke-width="3"/>
+                <ellipse cx="86" cy="112" rx="24" ry="14" fill="#FF8C00" stroke="#1a1a1a" stroke-width="3"/>
+                <ellipse cx="38" cy="108" rx="12" ry="4" fill="#FFB347" opacity="0.8"/>
+                <ellipse cx="82" cy="108" rx="12" ry="4" fill="#FFB347" opacity="0.8"/>
+                <ellipse cx="18" cy="74" rx="15" ry="11" fill="#FFA500" stroke="#1a1a1a" stroke-width="3"/>
+                <ellipse cx="110" cy="74" rx="15" ry="11" fill="#FFA500" stroke="#1a1a1a" stroke-width="3"/>
+                <g class="mascot-body">
+                    <circle cx="64" cy="72" r="46" fill="#FFA500" stroke="#1a1a1a" stroke-width="3"/>
+                    <circle cx="64" cy="72" r="43" fill="#FFB347"/>
+                    <ellipse cx="46" cy="46" rx="16" ry="10" fill="#FFD9A0" opacity="0.7"/>
+                    <ellipse class="mascot-eye" cx="52" cy="66" rx="7" ry="14" fill="#1a1a1a"/>
+                    <ellipse class="mascot-eye" cx="76" cy="66" rx="7" ry="14" fill="#1a1a1a"/>
+                    <ellipse cx="50" cy="58" rx="3" ry="5" fill="#ffffff"/>
+                    <ellipse cx="74" cy="58" rx="3" ry="5" fill="#ffffff"/>
+                    <ellipse cx="35" cy="84" rx="8" ry="4" fill="#FF6B6B" opacity="0.6"/>
+                    <ellipse cx="93" cy="84" rx="8" ry="4" fill="#FF6B6B" opacity="0.6"/>
+                    <path d="M 58 86 Q 64 92 70 86" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+                </g>
+            </svg>
         </div>
     </div>
 
@@ -353,7 +286,7 @@
             <button class="mascot-chat-close" onclick="toggleMascotChat()">×</button>
         </div>
         <div class="mascot-chat-body" id="mascotChatBody">
-            <div class="mascot-msg ai">Привет! Я Апельсинчик 🍊 Спроси меня о чём угодно — про еду, здоровье или просто поболтаем!</div>
+            <div class="mascot-msg ai">Привет! Я Апельсинчик 🍊 Спроси меня о чём угодно!</div>
         </div>
         <div class="mascot-chat-input">
             <input type="text" id="mascotInput" placeholder="Напиши вопрос..." onkeypress="if(event.key==='Enter') sendMascotMessage()">
@@ -361,7 +294,37 @@
         </div>
     </div>
 
+    <!-- КНОПКА ИГРЫ -->
+    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 998;">
+        <button class="game-btn" onclick="openGame()">🎮 Играть с Апельсинчиком</button>
+    </div>
+
+    <!-- ИГРА -->
+    <div class="game-overlay" id="gameOverlay">
+        <div class="game-hud">
+            <div class="coins-counter">🪙 <span id="coinsDisplay">0</span></div>
+            <div style="display: flex; gap: 10px;">
+                <button class="game-close" onclick="openShop()" title="Магазин">🛍️</button>
+                <button class="game-close" onclick="closeGame()" title="Выход">✕</button>
+            </div>
+        </div>
+        <div class="game-area" id="gameArea">
+            <div class="game-player" id="gamePlayer"></div>
+        </div>
+    </div>
+
+    <!-- МАГАЗИН -->
+    <div class="shop-overlay" id="shopOverlay">
+        <div class="shop-panel">
+            <button class="shop-close" onclick="closeShop()">✕</button>
+            <div class="shop-title">🛍️ Магазин Апельсинчика</div>
+            <div class="shop-subtitle">У тебя: 🪙 <span id="shopCoins">0</span></div>
+            <div class="shop-grid" id="shopGrid"></div>
+        </div>
+    </div>
+
     <script>
+        // === ТЕМА ===
         function toggleTheme() {
             document.body.classList.toggle('dark');
             const isDark = document.body.classList.contains('dark');
@@ -374,8 +337,9 @@
             document.querySelector('.theme-toggle').textContent = '☀️ Светлая тема';
         }
 
+        // === PWA ===
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js').catch(e => console.log('SW ошибка:', e));
+            navigator.serviceWorker.register('/sw.js').catch(e => console.log('SW:', e));
         }
         let deferredPrompt = null;
         window.addEventListener('beforeinstallprompt', (e) => {
@@ -384,11 +348,12 @@
             document.getElementById('installBtn').style.display = 'inline-block';
         });
         function installPWA() {
-            if (!deferredPrompt) { alert('Приложение уже установлено или браузер не поддерживает установку'); return; }
+            if (!deferredPrompt) { alert('Приложение уже установлено'); return; }
             deferredPrompt.prompt();
             deferredPrompt.userChoice.then(() => { deferredPrompt = null; document.getElementById('installBtn').style.display = 'none'; });
         }
 
+        // === ДОБАВЛЕНИЕ СТРОК ===
         function addRow() {
             var list = document.getElementById('dishList');
             var row = document.createElement('div');
@@ -411,9 +376,10 @@
             document.getElementById('calcBtn').textContent = '⏳ Считаем...';
         }
 
+        // === ГОЛОС ===
         function startVoice(btn) {
             const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SR) { alert('Голосовой ввод не поддерживается этим браузером'); return; }
+            if (!SR) { alert('Голосовой ввод не поддерживается'); return; }
             const recognition = new SR();
             recognition.lang = 'ru-RU';
             recognition.interimResults = false;
@@ -429,6 +395,7 @@
             recognition.start();
         }
 
+        // === СКАНЕР ===
         let scannerInstance = null;
         function openScanner() {
             document.getElementById('scannerModal').classList.add('active');
@@ -438,7 +405,7 @@
                 { fps: 10, qrbox: { width: 250, height: 150 } },
                 (decodedText) => { closeScanner(); lookupBarcode(decodedText); },
                 () => {}
-            ).catch(err => { alert('Не удалось открыть камеру: ' + err); closeScanner(); });
+            ).catch(err => { alert('Камера: ' + err); closeScanner(); });
         }
         function closeScanner() {
             if (scannerInstance) {
@@ -450,14 +417,14 @@
             try {
                 const res = await fetch('/barcode/' + code);
                 const data = await res.json();
-                if (data.error) { alert('Продукт не найден в базе'); return; }
-                const input = document.querySelector('input[name="dish"]');
-                input.value = data.name;
+                if (data.error) { alert('Продукт не найден'); return; }
+                document.querySelector('input[name="dish"]').value = data.name;
                 document.querySelector('input[name="grams"]').value = 100;
-                alert('Найдено: ' + data.name + '\nБЖУ на 100 г: Б ' + data.protein + ', Ж ' + data.fat + ', У ' + data.carbs);
-            } catch (e) { alert('Ошибка поиска штрихкода'); }
+                alert('Найдено: ' + data.name);
+            } catch (e) { alert('Ошибка поиска'); }
         }
 
+        // === ИСТОРИЯ ===
         function getTodayKey() {
             var d = new Date();
             return d.getFullYear() + '-' + (d.getMonth()+1).toString().padStart(2,'0') + '-' + d.getDate().toString().padStart(2,'0');
@@ -495,6 +462,7 @@
             block.innerHTML = html;
         }
 
+        // === ГРАФИК ===
         var chartInstance = null;
         function renderChart() {
             var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
@@ -519,11 +487,12 @@
             });
         }
 
+        // === АНАЛИЗ ИИ ===
         async function askAboutHistory() {
             var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
             var block = document.getElementById('ai-analysis');
-            if (history.length === 0) { block.textContent = 'Сначала добавьте хотя бы одно блюдо.'; return; }
-            block.textContent = '⏳ ИИ анализирует ваше питание... (10-30 сек)';
+            if (history.length === 0) { block.textContent = 'Сначала добавьте блюдо.'; return; }
+            block.textContent = '⏳ ИИ анализирует...';
             try {
                 var res = await fetch('/ask_history', {
                     method: 'POST', headers: {'Content-Type': 'application/json'},
@@ -541,36 +510,36 @@
             } catch (e) { block.textContent = 'Ошибка связи с ИИ.'; }
         }
 
+        // === ПОЧТА ===
         async function sendEmailReport() {
             var email = document.getElementById('emailTo').value.trim();
             var status = document.getElementById('email-status');
             var history = JSON.parse(localStorage.getItem('foodHistory') || '[]');
-            if (history.length === 0) { status.textContent = 'Сначала добавьте хотя бы одно блюдо.'; status.style.color = '#e53935'; return; }
-            if (!email || email.indexOf('@') === -1) { status.textContent = 'Введите корректный email'; status.style.color = '#e53935'; return; }
+            if (history.length === 0) { status.textContent = 'Сначала добавьте блюдо.'; return; }
+            if (!email || email.indexOf('@') === -1) { status.textContent = 'Введите корректный email'; return; }
             var text = 'ОТЧЁТ О ПИТАНИИ\n\n';
             var tc=0,tp=0,tf=0,tc2=0,tx=0;
             history.forEach(function(i){
                 text += '• ' + i.name + ' (' + i.grams + ' г) — Б ' + i.protein + ', Ж ' + i.fat + ', У ' + i.carbs + ', ХЕ ' + i.xe + ', ' + i.calories + ' ккал\n';
                 tc+=i.calories;tp+=i.protein;tf+=i.fat;tc2+=i.carbs;tx+=i.xe;
             });
-            text += '\nИТОГО:\n' + Math.round(tc) + ' ккал\nБелки: ' + tp.toFixed(1) + ' г\nЖиры: ' + tf.toFixed(1) + ' г\nУглеводы: ' + tc2.toFixed(1) + ' г\nХлебные единицы: ' + tx.toFixed(1) + '\n\nСайт: my-nutrition-ai.relaxdev.ru\nРасчёты носят ознакомительный характер.';
+            text += '\nИТОГО:\n' + Math.round(tc) + ' ккал\nБелки: ' + tp.toFixed(1) + ' г\nЖиры: ' + tf.toFixed(1) + ' г\nУглеводы: ' + tc2.toFixed(1) + ' г\nХЕ: ' + tx.toFixed(1);
             status.textContent = '⏳ Отправляем...';
-            status.style.color = '#666';
             try {
                 var res = await fetch('/send_email', {
                     method: 'POST', headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({to: email, content: text})
                 });
                 var data = await res.json();
-                if (data.ok) { status.textContent = '✅ Отчёт отправлен на ' + email; status.style.color = '#43a047'; }
-                else { status.textContent = '❌ ' + (data.error || 'Ошибка'); status.style.color = '#e53935'; }
-            } catch (e) { status.textContent = '❌ Ошибка соединения'; status.style.color = '#e53935'; }
+                if (data.ok) { status.textContent = '✅ Отправлено на ' + email; }
+                else { status.textContent = '❌ ' + (data.error || 'Ошибка'); }
+            } catch (e) { status.textContent = '❌ Ошибка соединения'; }
         }
 
+        // === АПЕЛЬСИНЧИК ЧАТ ===
         function toggleMascotChat() {
             document.getElementById('mascotChat').classList.toggle('active');
         }
-
         async function sendMascotMessage() {
             var input = document.getElementById('mascotInput');
             var body = document.getElementById('mascotChatBody');
@@ -591,12 +560,168 @@
                 body.innerHTML += '<div class="mascot-msg ai">' + data.answer + '</div>';
             } catch(e) {
                 document.getElementById('mascotTyping').remove();
-                body.innerHTML += '<div class="mascot-msg ai">Ой, я задумался... Попробуй ещё раз!</div>';
+                body.innerHTML += '<div class="mascot-msg ai">Ой, я задумался...</div>';
             }
             body.scrollTop = body.scrollHeight;
         }
 
-        renderHistory(); renderChart();
+        // === ИГРА ===
+        let coins = parseInt(localStorage.getItem('mascotCoins') || '0');
+        let ownedItems = JSON.parse(localStorage.getItem('mascotOwned') || '[]');
+        let equippedItems = JSON.parse(localStorage.getItem('mascotEquipped') || '[]');
+        let gameRunning = false;
+        let gameLoopId = null;
+
+        const SHOP_ITEMS = [
+            { id: 'hat',    emoji: '🎩', name: 'Цилиндр',        price: 10 },
+            { id: 'cap',    emoji: '🧢', name: 'Кепка',          price: 15 },
+            { id: 'crown',  emoji: '👑', name: 'Корона',         price: 50 },
+            { id: 'glasses',emoji: '🕶️', name: 'Очки',           price: 20 },
+            { id: 'scarf',  emoji: '🧣', name: 'Шарф',           price: 25 },
+            { id: 'bow',    emoji: '🎀', name: 'Бантик',         price: 12 },
+            { id: 'headph', emoji: '🎧', name: 'Наушники',       price: 30 },
+            { id: 'cap2',   emoji: '🎓', name: 'Академ. шапка',  price: 40 }
+        ];
+        const ITEM_EMOJIS = ['🪙', '⭐', '🍎', '🍊', '🍌', '🪙', '⭐', '🍇'];
+
+        function openGame() {
+            document.getElementById('gameOverlay').classList.add('active');
+            document.getElementById('coinsDisplay').textContent = coins;
+            gameRunning = true;
+            spawnLoop();
+            gameLoop();
+        }
+        function closeGame() {
+            gameRunning = false;
+            document.getElementById('gameOverlay').classList.remove('active');
+            clearTimeout(gameLoopId);
+            document.querySelectorAll('.flying-item').forEach(el => el.remove());
+        }
+        function spawnLoop() {
+            if (!gameRunning) return;
+            spawnItem();
+            gameLoopId = setTimeout(spawnLoop, 700 + Math.random() * 500);
+        }
+        function spawnItem() {
+            if (!gameRunning) return;
+            const area = document.getElementById('gameArea');
+            const emoji = ITEM_EMOJIS[Math.floor(Math.random() * ITEM_EMOJIS.length)];
+            const item = document.createElement('div');
+            item.className = 'flying-item';
+            item.textContent = emoji;
+            item.style.top = (60 + Math.random() * (area.clientHeight - 250)) + 'px';
+            item.style.left = (area.clientWidth + 40) + 'px';
+            item.onclick = (e) => collectItem(e, item);
+            area.appendChild(item);
+        }
+        function gameLoop() {
+            if (!gameRunning) return;
+            const area = document.getElementById('gameArea');
+            area.querySelectorAll('.flying-item').forEach(item => {
+                const next = parseFloat(item.style.left) - 3;
+                if (next < -60) item.remove();
+                else item.style.left = next + 'px';
+            });
+            requestAnimationFrame(gameLoop);
+        }
+        function collectItem(event, item) {
+            event.stopPropagation();
+            coins++;
+            localStorage.setItem('mascotCoins', coins);
+            document.getElementById('coinsDisplay').textContent = coins;
+            const pop = document.createElement('div');
+            pop.className = 'item-pop';
+            pop.textContent = item.textContent;
+            pop.style.left = item.style.left;
+            pop.style.top = item.style.top;
+            document.getElementById('gameArea').appendChild(pop);
+            setTimeout(() => pop.remove(), 500);
+            const float = document.createElement('div');
+            float.className = 'float-text';
+            float.textContent = '+1';
+            float.style.left = item.style.left;
+            float.style.top = item.style.top;
+            document.getElementById('gameArea').appendChild(float);
+            setTimeout(() => float.remove(), 800);
+            item.remove();
+        }
+        function openShop() {
+            document.getElementById('shopCoins').textContent = coins;
+            renderShop();
+            document.getElementById('shopOverlay').classList.add('active');
+        }
+        function closeShop() {
+            document.getElementById('shopOverlay').classList.remove('active');
+        }
+        function renderShop() {
+            const grid = document.getElementById('shopGrid');
+            grid.innerHTML = '';
+            SHOP_ITEMS.forEach(item => {
+                const owned = ownedItems.includes(item.id);
+                const equipped = equippedItems.includes(item.id);
+                const div = document.createElement('div');
+                div.className = 'shop-item' + (owned ? ' owned' : '') + (equipped ? ' equipped' : '');
+                div.innerHTML = '<span class="item-emoji">' + item.emoji + '</span>' +
+                    '<div class="item-name">' + item.name + '</div>' +
+                    (owned 
+                        ? '<div class="item-price">Куплено ✅</div><button class="' + (equipped ? 'unequip' : 'equip') + '" onclick="toggleEquip(\'' + item.id + '\')">' + (equipped ? 'Снять' : 'Надеть') + '</button>'
+                        : '<div class="item-price">🪙 ' + item.price + '</div><button onclick="buyItem(\'' + item.id + '\')">Купить</button>'
+                    );
+                grid.appendChild(div);
+            });
+        }
+        function buyItem(id) {
+            const item = SHOP_ITEMS.find(i => i.id === id);
+            if (!item || ownedItems.includes(id)) return;
+            if (coins < item.price) { alert('Не хватает монеток! 🪙'); return; }
+            coins -= item.price;
+            ownedItems.push(id);
+            localStorage.setItem('mascotCoins', coins);
+            localStorage.setItem('mascotOwned', JSON.stringify(ownedItems));
+            document.getElementById('shopCoins').textContent = coins;
+            document.getElementById('coinsDisplay').textContent = coins;
+            renderShop();
+        }
+        function toggleEquip(id) {
+            if (equippedItems.includes(id)) {
+                equippedItems = equippedItems.filter(i => i !== id);
+            } else {
+                equippedItems.push(id);
+            }
+            localStorage.setItem('mascotEquipped', JSON.stringify(equippedItems));
+            renderShop();
+            renderPlayerDecorations();
+        }
+        function renderPlayerDecorations() {
+            document.querySelectorAll('.mascot-decoration').forEach(el => el.remove());
+            const player = document.getElementById('mascotContainer');
+            if (!player) return;
+            equippedItems.forEach(id => {
+                const item = SHOP_ITEMS.find(i => i.id === id);
+                if (!item) return;
+                const el = document.createElement('div');
+                el.className = 'mascot-decoration';
+                el.style.cssText = 'position: absolute; font-size: 32px; pointer-events: none; z-index: 10;';
+                if (['hat', 'cap', 'crown', 'cap2'].includes(id)) {
+                    el.style.cssText += 'top: -18px; left: 50%; transform: translateX(-50%);';
+                } else if (id === 'glasses') {
+                    el.style.cssText += 'top: 38%; left: 50%; transform: translateX(-50%);';
+                } else if (id === 'scarf') {
+                    el.style.cssText += 'bottom: 20px; left: 50%; transform: translateX(-50%);';
+                } else if (id === 'bow') {
+                    el.style.cssText += 'top: 15%; right: 5px;';
+                } else if (id === 'headph') {
+                    el.style.cssText += 'top: 25%; left: 50%; transform: translateX(-50%); font-size: 40px;';
+                }
+                el.textContent = item.emoji;
+                player.style.position = 'relative';
+                player.appendChild(el);
+            });
+        }
+
+        renderHistory();
+        renderChart();
+        renderPlayerDecorations();
     </script>
 
     {% if results %}
@@ -619,200 +744,5 @@
         document.getElementById('resultsBlock').innerHTML = resultsHtml;
     </script>
     {% endif %}
-<!-- КНОПКА ИГРЫ (на сайте) -->
-<div style="position: fixed; bottom: 20px; left: 20px; z-index: 998;">
-    <button class="game-btn" onclick="openGame()">🎮 Играть с Апельсинчиком</button>
-</div>
-
-<!-- ИГРА -->
-<div class="game-overlay" id="gameOverlay">
-    <div class="game-hud">
-        <div class="coins-counter">🪙 <span id="coinsDisplay">0</span></div>
-        <div style="display: flex; gap: 10px;">
-            <button class="game-close" onclick="openShop()" title="Магазин">🛍️</button>
-            <button class="game-close" onclick="closeGame()" title="Выход">✕</button>
-        </div>
-    </div>
-    <div class="game-area" id="gameArea">
-        <div class="game-player" id="gamePlayer"></div>
-    </div>
-</div>
-
-<!-- МАГАЗИН -->
-<div class="shop-overlay" id="shopOverlay">
-    <div class="shop-panel">
-        <button class="shop-close" onclick="closeShop()">✕</button>
-        <div class="shop-title">🛍️ Магазин Апельсинчика</div>
-        <div class="shop-subtitle">У тебя: 🪙 <span id="shopCoins">0</span></div>
-        <div class="shop-grid" id="shopGrid"></div>
-    </div>
-</div>
-
-<script>
-// ===== ИГРА С АПЕЛЬСИНЧИКОМ =====
-let coins = parseInt(localStorage.getItem('mascotCoins') || '0');
-let ownedItems = JSON.parse(localStorage.getItem('mascotOwned') || '[]');
-let equippedItems = JSON.parse(localStorage.getItem('mascotEquipped') || '[]');
-let gameRunning = false;
-let gameLoopId = null;
-
-const SHOP_ITEMS = [
-    { id: 'hat',    emoji: '🎩', name: 'Цилиндр',        price: 10 },
-    { id: 'cap',    emoji: '🧢', name: 'Кепка',          price: 15 },
-    { id: 'crown',  emoji: '👑', name: 'Корона',         price: 50 },
-    { id: 'glasses',emoji: '🕶️', name: 'Очки',           price: 20 },
-    { id: 'scarf',  emoji: '🧣', name: 'Шарф',           price: 25 },
-    { id: 'bow',    emoji: '🎀', name: 'Бантик',         price: 12 },
-    { id: 'headph', emoji: '🎧', name: 'Наушники',       price: 30 },
-    { id: 'cap2',   emoji: '🎓', name: 'Академ. шапка',  price: 40 }
-];
-
-const ITEM_EMOJIS = ['🪙', '⭐', '🍎', '🍊', '🍌', '🪙', '⭐', '🍇'];
-
-function openGame() {
-    document.getElementById('gameOverlay').classList.add('active');
-    document.getElementById('coinsDisplay').textContent = coins;
-    gameRunning = true;
-    spawnLoop();
-    gameLoop();
-}
-function closeGame() {
-    gameRunning = false;
-    document.getElementById('gameOverlay').classList.remove('active');
-    clearTimeout(gameLoopId);
-    document.querySelectorAll('.flying-item').forEach(el => el.remove());
-}
-function spawnLoop() {
-    if (!gameRunning) return;
-    spawnItem();
-    gameLoopId = setTimeout(spawnLoop, 700 + Math.random() * 500);
-}
-function spawnItem() {
-    if (!gameRunning) return;
-    const area = document.getElementById('gameArea');
-    const emoji = ITEM_EMOJIS[Math.floor(Math.random() * ITEM_EMOJIS.length)];
-    const item = document.createElement('div');
-    item.className = 'flying-item';
-    item.textContent = emoji;
-    item.style.top = (60 + Math.random() * (area.clientHeight - 250)) + 'px';
-    item.style.left = (area.clientWidth + 40) + 'px';
-    item.onclick = (e) => collectItem(e, item);
-    area.appendChild(item);
-}
-function gameLoop() {
-    if (!gameRunning) return;
-    const area = document.getElementById('gameArea');
-    area.querySelectorAll('.flying-item').forEach(item => {
-        const next = parseFloat(item.style.left) - 3;
-        if (next < -60) item.remove();
-        else item.style.left = next + 'px';
-    });
-    requestAnimationFrame(gameLoop);
-}
-function collectItem(event, item) {
-    event.stopPropagation();
-    coins++;
-    localStorage.setItem('mascotCoins', coins);
-    document.getElementById('coinsDisplay').textContent = coins;
-
-    const pop = document.createElement('div');
-    pop.className = 'item-pop';
-    pop.textContent = item.textContent;
-    pop.style.left = item.style.left;
-    pop.style.top = item.style.top;
-    document.getElementById('gameArea').appendChild(pop);
-    setTimeout(() => pop.remove(), 500);
-
-    const float = document.createElement('div');
-    float.className = 'float-text';
-    float.textContent = '+1';
-    float.style.left = item.style.left;
-    float.style.top = item.style.top;
-    document.getElementById('gameArea').appendChild(float);
-    setTimeout(() => float.remove(), 800);
-
-    item.remove();
-}
-function openShop() {
-    document.getElementById('shopCoins').textContent = coins;
-    renderShop();
-    document.getElementById('shopOverlay').classList.add('active');
-}
-function closeShop() {
-    document.getElementById('shopOverlay').classList.remove('active');
-}
-function renderShop() {
-    const grid = document.getElementById('shopGrid');
-    grid.innerHTML = '';
-    SHOP_ITEMS.forEach(item => {
-        const owned = ownedItems.includes(item.id);
-        const equipped = equippedItems.includes(item.id);
-        const div = document.createElement('div');
-        div.className = 'shop-item' + (owned ? ' owned' : '') + (equipped ? ' equipped' : '');
-        div.innerHTML = `
-            <span class="item-emoji">${item.emoji}</span>
-            <div class="item-name">${item.name}</div>
-            ${owned 
-                ? `<div class="item-price">Куплено ✅</div>
-                   <button class="${equipped ? 'unequip' : 'equip'}" onclick="toggleEquip('${item.id}')">
-                       ${equipped ? 'Снять' : 'Надеть'}
-                   </button>`
-                : `<div class="item-price">🪙 ${item.price}</div>
-                   <button onclick="buyItem('${item.id}')">Купить</button>`
-            }
-        `;
-        grid.appendChild(div);
-    });
-}
-function buyItem(id) {
-    const item = SHOP_ITEMS.find(i => i.id === id);
-    if (!item || ownedItems.includes(id)) return;
-    if (coins < item.price) { alert('Не хватает монеток! 🪙'); return; }
-    coins -= item.price;
-    ownedItems.push(id);
-    localStorage.setItem('mascotCoins', coins);
-    localStorage.setItem('mascotOwned', JSON.stringify(ownedItems));
-    document.getElementById('shopCoins').textContent = coins;
-    document.getElementById('coinsDisplay').textContent = coins;
-    renderShop();
-}
-function toggleEquip(id) {
-    if (equippedItems.includes(id)) {
-        equippedItems = equippedItems.filter(i => i !== id);
-    } else {
-        equippedItems.push(id);
-    }
-    localStorage.setItem('mascotEquipped', JSON.stringify(equippedItems));
-    renderShop();
-    renderPlayerDecorations();
-}
-function renderPlayerDecorations() {
-    document.querySelectorAll('.mascot-decoration').forEach(el => el.remove());
-    const player = document.getElementById('mascotContainer');
-    if (!player) return;
-    equippedItems.forEach(id => {
-        const item = SHOP_ITEMS.find(i => i.id === id);
-        if (!item) return;
-        const el = document.createElement('div');
-        el.className = 'mascot-decoration';
-        el.style.cssText = 'position: absolute; font-size: 32px; pointer-events: none; z-index: 10;';
-        if (['hat', 'cap', 'crown', 'cap2'].includes(id)) {
-            el.style.cssText += 'top: -18px; left: 50%; transform: translateX(-50%);';
-        } else if (id === 'glasses') {
-            el.style.cssText += 'top: 38%; left: 50%; transform: translateX(-50%);';
-        } else if (id === 'scarf') {
-            el.style.cssText += 'bottom: 20px; left: 50%; transform: translateX(-50%);';
-        } else if (id === 'bow') {
-            el.style.cssText += 'top: 15%; right: 5px;';
-        } else if (id === 'headph') {
-            el.style.cssText += 'top: 25%; left: 50%; transform: translateX(-50%); font-size: 40px;';
-        }
-        el.textContent = item.emoji;
-        player.style.position = 'relative';
-        player.appendChild(el);
-    });
-}
-renderPlayerDecorations();
-</script>
 </body>
 </html>
