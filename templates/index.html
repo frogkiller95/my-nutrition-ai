@@ -1566,9 +1566,21 @@ function makeOrangeSVG(size, deco){
     s += px(7, 9, 1, 1, '#ffffff') + px(11, 9, 1, 1, '#ffffff');
     s += px(5, 12, 2, 1, '#FF6B6B') + px(13, 12, 2, 1, '#FF6B6B');
     s += px(9, 14, 2, 1, '#1a1a1a') + px(8, 13, 1, 1, '#1a1a1a') + px(11, 13, 1, 1, '#1a1a1a');
-    if(d.includes('hat')){ s += px(7,0,6,1,'#1a1a1a') + px(7,1,6,2,'#1a1a1a') + px(7,2,6,1,'#8B0000') + px(5,3,10,1,'#1a1a1a'); }
-    if(d.includes('cap')){ s += px(6,0,8,1,'#e53935') + px(6,1,8,2,'#e53935') + px(5,3,11,1,'#b71c1c'); }
-    if(d.includes('crown')){ s += px(5,3,10,1,'#FFD700') + px(5,0,1,3,'#FFD700') + px(9,-1,2,4,'#FFD700') + px(14,0,1,3,'#FFD700'); }
+        if(d.includes('hat')){
+        s += '<rect x="46" y="-10" width="36" height="36" fill="#1a1a1a"/>';
+        s += '<rect x="46" y="8" width="36" height="8" fill="#8B0000"/>';
+        s += '<ellipse cx="64" cy="26" rx="34" ry="5" fill="#1a1a1a"/>';
+    }
+    if(d.includes('cap')){
+        s += '<path d="M 30 26 Q 64 -14 98 26 Z" fill="#e53935" stroke="#1a1a1a" stroke-width="2"/>';
+        s += '<rect x="26" y="22" width="76" height="8" fill="#b71c1c" stroke="#1a1a1a" stroke-width="1.5"/>';
+    }
+        if(d.includes('crown')){
+        s += '<path d="M 36 26 L 30 0 L 46 14 L 64 -12 L 82 14 L 98 0 L 92 26 Z" fill="#FFD700" stroke="#B8860B" stroke-width="2" stroke-linejoin="round"/>';
+        s += '<circle cx="30" cy="0" r="4" fill="#FFD700" stroke="#B8860B" stroke-width="1.5"/>';
+        s += '<circle cx="64" cy="-12" r="4" fill="#FFD700" stroke="#B8860B" stroke-width="1.5"/>';
+        s += '<circle cx="98" cy="0" r="4" fill="#FFD700" stroke="#B8860B" stroke-width="1.5"/>';
+    }
     if(d.includes('cap2')){ s += px(7,2,6,2,'#1a1a1a') + px(4,0,12,1,'#1a1a1a') + px(5,1,10,1,'#333333') + px(15,1,1,3,'#FFD700'); }
     if(d.includes('headph')){ s += px(4,6,1,5,'#1a1a1a') + px(15,6,1,5,'#1a1a1a') + px(5,5,2,1,'#1a1a1a') + px(13,5,2,1,'#1a1a1a') + px(7,4,6,1,'#1a1a1a') + px(9,3,2,1,'#1a1a1a') + px(4,7,1,3,'#e53935') + px(15,7,1,3,'#e53935'); }
     if(d.includes('glasses')){ s += px(6,9,4,3,'rgba(20,20,20,0.9)') + px(10,9,4,3,'rgba(20,20,20,0.9)') + px(9,10,2,1,'#1a1a1a'); }
@@ -1576,13 +1588,36 @@ function makeOrangeSVG(size, deco){
     if(d.includes('bow')){ s += px(14,6,1,2,'#e91e63') + px(15,5,1,4,'#e91e63') + px(16,6,1,2,'#e91e63'); }
     if(d.includes('halo')){ s += px(6,0,8,1,'#FFD700') + px(5,1,1,1,'#FFD700') + px(14,1,1,1,'#FFD700'); }
     if(d.includes('horns')){ s += px(6,1,1,2,'#8B0000') + px(7,0,1,2,'#8B0000') + px(13,1,1,2,'#8B0000') + px(12,0,1,2,'#8B0000'); }
-    if(d.includes('pirate')){ s += px(4,1,12,2,'#1a1a1a') + px(5,0,10,1,'#1a1a1a') + px(9,0,2,1,'#ffffff') + px(8,1,1,1,'#ffffff') + px(11,1,1,1,'#ffffff'); }
-    if(d.includes('santa')){ s += px(6,3,8,1,'#ffffff') + px(7,0,6,3,'#e53935') + px(11,-1,2,1,'#e53935') + px(12,-2,2,1,'#ffffff'); }
+       if(d.includes('pirate')){
+        s += '<path d="M 26 26 L 40 -2 L 88 -2 L 102 26 Z" fill="#1a1a1a" stroke="#000" stroke-width="1.5"/>';
+        s += '<rect x="60" y="6" width="8" height="8" fill="#ffffff"/>';
+        s += '<circle cx="46" cy="12" r="3" fill="#ffffff"/>';
+        s += '<circle cx="82" cy="12" r="3" fill="#ffffff"/>';
+    }
+       if(d.includes('santa')){
+        s += '<path d="M 34 26 L 64 -18 L 94 26 Z" fill="#e53935" stroke="#b71c1c" stroke-width="1.5"/>';
+        s += '<circle cx="64" cy="-20" r="7" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>';
+        s += '<rect x="34" y="24" width="60" height="7" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>';
+    }
     if(d.includes('flowers')){ s += px(5,1,1,1,'#e91e63') + px(7,0,1,1,'#FFC107') + px(10,0,1,1,'#e91e63') + px(13,1,1,1,'#9C27B0') + px(6,2,1,1,'#FFC107') + px(13,2,1,1,'#e91e63'); }
     if(d.includes('monocle')){ s += px(6,8,5,5,'#1a1a1a') + px(7,9,3,3,'rgba(200,220,255,0.6)') + px(10,14,1,1,'#FFD700'); }
-    if(d.includes('propeller')){ s += px(6,2,8,1,'#42a5f5') + px(5,3,10,1,'#1e88e5') + px(9,0,2,2,'#1a1a1a') + px(5,0,4,1,'#e53935') + px(11,0,4,1,'#e53935'); }
-    if(d.includes('wizard')){ s += px(6,3,8,1,'#4B0082') + px(7,0,6,3,'#4B0082') + px(9,-2,2,2,'#4B0082') + px(5,3,10,1,'#FFD700'); }
-    if(d.includes('viking')){ s += px(4,0,3,2,'#888888') + px(13,0,3,2,'#888888') + px(5,2,10,1,'#555555') + px(5,3,10,1,'#333333'); }
+       if(d.includes('propeller')){
+        s += '<path d="M 34 26 Q 64 4 94 26 Z" fill="#42a5f5" stroke="#1a1a1a" stroke-width="1.5"/>';
+        s += '<rect x="62" y="-8" width="4" height="16" fill="#1a1a1a"/>';
+        s += '<ellipse cx="52" cy="-8" rx="14" ry="3" fill="#e53935" stroke="#b71c1c" stroke-width="1.5"/>';
+        s += '<ellipse cx="76" cy="-8" rx="14" ry="3" fill="#e53935" stroke="#b71c1c" stroke-width="1.5"/>';
+    }
+       if(d.includes('wizard')){
+        s += '<path d="M 34 26 L 50 -22 L 78 -22 L 94 26 Z" fill="#4B0082" stroke="#2d0052" stroke-width="1.5"/>';
+        s += '<ellipse cx="64" cy="26" rx="34" ry="5" fill="#FFD700"/>';
+        s += '<circle cx="64" cy="-22" r="3" fill="#FFD700"/>';
+    }
+    if(d.includes('viking')){
+        s += '<path d="M 36 26 L 30 4 L 98 4 L 92 26 Z" fill="#888888" stroke="#555" stroke-width="1.5"/>';
+        s += '<path d="M 30 4 L 14 -10 L 32 0 Z" fill="#888888" stroke="#555" stroke-width="1.5"/>';
+        s += '<path d="M 98 4 L 114 -10 L 96 0 Z" fill="#888888" stroke="#555" stroke-width="1.5"/>';
+        s += '<rect x="36" y="0" width="56" height="6" fill="#555"/>';
+    }
     if(d.includes('tophat_gold')){ s += px(7,0,6,1,'#FFD700') + px(7,1,6,2,'#FFC107') + px(7,2,6,1,'#FF8C00') + px(5,3,10,1,'#FFD700'); }
     if(d.includes('devil_eyes')){ s += px(7,9,2,4,'#FF0000') + px(11,9,2,4,'#FF0000') + px(7,9,1,1,'#FF8888') + px(11,9,1,1,'#FF8888'); }
     if(d.includes('ninja')){ s += px(5,8,10,3,'#1a1a1a') + px(6,6,8,2,'#1a1a1a') + px(7,5,6,1,'#1a1a1a'); }
