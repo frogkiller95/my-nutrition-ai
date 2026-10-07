@@ -1829,13 +1829,13 @@ function makeRoundMascotSVG(size, deco){
 function makeOriginalMascotSVG(size, deco){
     const d = deco || [];
     let s = '';
-    s += '<ellipse cx="42" cy="112" rx="24" ry="14" fill="#FF8C00" stroke="#1a1a1a" stroke-width="3"/>';
-    s += '<ellipse cx="86" cy="112" rx="24" ry="14" fill="#FF8C00" stroke="#1a1a1a" stroke-width="3"/>';
+    s += '<ellipse cx="42" cy="112" rx="24" ry="14" fill="#FF8C00" stroke="#1a1a1a" stroke-width="2"/>';
+    s += '<ellipse cx="86" cy="112" rx="24" ry="14" fill="#FF8C00" stroke="#1a1a1a" stroke-width="2"/>';
     s += '<ellipse cx="38" cy="108" rx="12" ry="4" fill="#FFB347" opacity="0.8"/>';
     s += '<ellipse cx="82" cy="108" rx="12" ry="4" fill="#FFB347" opacity="0.8"/>';
-    s += '<ellipse cx="18" cy="74" rx="15" ry="11" fill="#FFA500" stroke="#1a1a1a" stroke-width="3"/>';
-    s += '<ellipse cx="110" cy="74" rx="15" ry="11" fill="#FFA500" stroke="#1a1a1a" stroke-width="3"/>';
-    s += '<circle cx="64" cy="72" r="46" fill="#FFA500" stroke="#1a1a1a" stroke-width="3"/>';
+    s += '<ellipse cx="18" cy="74" rx="15" ry="11" fill="#FFA500" stroke="#1a1a1a" stroke-width="2"/>';
+    s += '<ellipse cx="110" cy="74" rx="15" ry="11" fill="#FFA500" stroke="#1a1a1a" stroke-width="2"/>';
+    s += '<circle cx="64" cy="72" r="46" fill="#FFA500" stroke="#1a1a1a" stroke-width="2"/>';
     s += '<circle cx="64" cy="72" r="43" fill="#FFB347"/>';
     s += '<ellipse cx="46" cy="46" rx="16" ry="10" fill="#FFD9A0" opacity="0.7"/>';
     s += '<ellipse cx="52" cy="66" rx="7" ry="14" fill="#1a1a1a"/>';
@@ -1844,26 +1844,76 @@ function makeOriginalMascotSVG(size, deco){
     s += '<ellipse cx="74" cy="58" rx="3" ry="5" fill="#ffffff"/>';
     s += '<ellipse cx="35" cy="84" rx="8" ry="4" fill="#FF6B6B" opacity="0.6"/>';
     s += '<ellipse cx="93" cy="84" rx="8" ry="4" fill="#FF6B6B" opacity="0.6"/>';
-    s += '<path d="M 58 86 Q 64 92 70 86" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/>';
-    s += '<path d="M 64 22 Q 70 6 86 10 Q 78 22 64 22 Z" fill="#4CAF50" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>';
+    s += '<path d="M 58 86 Q 64 92 70 86" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/>';
+    s += '<path d="M 64 22 Q 70 6 86 10 Q 78 22 64 22 Z" fill="#4CAF50" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>';
+    
     if(d.includes('hat')){
         s += '<rect x="48" y="8" width="32" height="30" fill="#1a1a1a"/>';
         s += '<rect x="48" y="18" width="32" height="8" fill="#8B0000"/>';
         s += '<ellipse cx="64" cy="40" rx="26" ry="4" fill="#1a1a1a"/>';
     }
     if(d.includes('cap')){
-        s += '<path d="M 36 30 Q 64 -8 92 30 Z" fill="#e53935" stroke="#1a1a1a" stroke-width="3"/>';
-        s += '<rect x="32" y="28" width="64" height="6" fill="#b71c1c" stroke="#1a1a1a" stroke-width="2"/>';
+        s += '<path d="M 36 30 Q 64 -8 92 30 Z" fill="#e53935" stroke="#1a1a1a" stroke-width="2"/>';
+        s += '<rect x="32" y="28" width="64" height="6" fill="#b71c1c" stroke="#1a1a1a" stroke-width="1.5"/>';
     }
     if(d.includes('crown')){
-        s += '<path d="M 38 30 L 32 6 L 48 18 L 64 -6 L 80 18 L 96 6 L 90 30 Z" fill="#FFD700" stroke="#B8860B" stroke-width="2.5" stroke-linejoin="round"/>';
-        s += '<circle cx="32" cy="6" r="4" fill="#FFD700" stroke="#B8860B" stroke-width="2"/>';
-        s += '<circle cx="64" cy="-6" r="4" fill="#FFD700" stroke="#B8860B" stroke-width="2"/>';
-        s += '<circle cx="96" cy="6" r="4" fill="#FFD700" stroke="#B8860B" stroke-width="2"/>';
+        s += '<path d="M 38 30 L 32 6 L 48 18 L 64 -6 L 80 18 L 96 6 L 90 30 Z" fill="#FFD700" stroke="#B8860B" stroke-width="2" stroke-linejoin="round"/>';
+        s += '<circle cx="32" cy="6" r="4" fill="#FFD700" stroke="#B8860B" stroke-width="1.5"/>';
+        s += '<circle cx="64" cy="-6" r="4" fill="#FFD700" stroke="#B8860B" stroke-width="1.5"/>';
+        s += '<circle cx="96" cy="6" r="4" fill="#FFD700" stroke="#B8860B" stroke-width="1.5"/>';
+    }
+    if(d.includes('cap2')){
+        s += '<rect x="50" y="14" width="28" height="20" fill="#1a1a1a"/>';
+        s += '<polygon points="28,14 64,-2 100,14 64,30" fill="#1a1a1a" stroke="#333" stroke-width="1.5"/>';
+        s += '<path d="M 96 14 L 96 32" stroke="#FFD700" stroke-width="2"/>';
+        s += '<circle cx="96" cy="34" r="3" fill="#FFD700"/>';
+    }
+    if(d.includes('pirate')){
+        s += '<path d="M 30 32 L 40 6 L 88 6 L 98 32 Z" fill="#1a1a1a" stroke="#000" stroke-width="1.5"/>';
+        s += '<rect x="60" y="12" width="8" height="8" fill="#ffffff"/>';
+        s += '<circle cx="46" cy="18" r="3" fill="#ffffff"/>';
+        s += '<circle cx="82" cy="18" r="3" fill="#ffffff"/>';
+    }
+    if(d.includes('santa')){
+        s += '<path d="M 38 32 L 64 -8 L 90 32 Z" fill="#e53935" stroke="#b71c1c" stroke-width="1.5"/>';
+        s += '<circle cx="64" cy="-10" r="6" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>';
+        s += '<rect x="36" y="30" width="56" height="6" fill="#ffffff" stroke="#ccc" stroke-width="1.5"/>';
+    }
+    if(d.includes('propeller')){
+        s += '<path d="M 38 30 Q 64 12 90 30 Z" fill="#42a5f5" stroke="#1a1a1a" stroke-width="1.5"/>';
+        s += '<rect x="62" y="4" width="4" height="14" fill="#1a1a1a"/>';
+        s += '<ellipse cx="54" cy="4" rx="12" ry="3" fill="#e53935" stroke="#b71c1c" stroke-width="1.5"/>';
+        s += '<ellipse cx="74" cy="4" rx="12" ry="3" fill="#e53935" stroke="#b71c1c" stroke-width="1.5"/>';
+    }
+    if(d.includes('wizard')){
+        s += '<path d="M 38 32 L 54 -14 L 74 -14 L 90 32 Z" fill="#4B0082" stroke="#2d0052" stroke-width="1.5"/>';
+        s += '<ellipse cx="64" cy="30" rx="28" ry="4" fill="#FFD700"/>';
+        s += '<circle cx="64" cy="-14" r="3" fill="#FFD700"/>';
+    }
+    if(d.includes('viking')){
+        s += '<path d="M 38 32 L 32 12 L 96 12 L 90 32 Z" fill="#888888" stroke="#555" stroke-width="1.5"/>';
+        s += '<path d="M 32 12 L 18 0 L 34 8 Z" fill="#888888" stroke="#555" stroke-width="1.5"/>';
+        s += '<path d="M 96 12 L 110 0 L 94 8 Z" fill="#888888" stroke="#555" stroke-width="1.5"/>';
+        s += '<rect x="38" y="8" width="52" height="6" fill="#555"/>';
+    }
+    if(d.includes('tophat_gold')){
+        s += '<rect x="48" y="8" width="32" height="30" fill="#FFD700"/>';
+        s += '<rect x="48" y="18" width="32" height="8" fill="#FFC107"/>';
+        s += '<ellipse cx="64" cy="40" rx="26" ry="4" fill="#FFD700"/>';
+    }
+    if(d.includes('party_hat')){
+        s += '<path d="M 38 32 L 64 -10 L 90 32 Z" fill="#FF1493" stroke="#c2185b" stroke-width="1.5"/>';
+        s += '<rect x="36" y="28" width="56" height="4" fill="#FFD700"/>';
+        s += '<circle cx="64" cy="-10" r="3" fill="#FFD700"/>';
+    }
+    if(d.includes('harry_potter')){
+        s += '<path d="M 34 32 L 50 0 L 78 0 L 94 32 Z" fill="#8B4513" stroke="#5D4037" stroke-width="1.5"/>';
+        s += '<rect x="34" y="28" width="60" height="6" fill="#8B4513"/>';
+        s += '<rect x="56" y="4" width="16" height="4" fill="#FFD700"/>';
     }
     if(d.includes('headph')){
-        s += '<path d="M 22 56 Q 22 20 64 20 Q 106 20 106 56" stroke="#1a1a1a" stroke-width="9" fill="none" stroke-linecap="round"/>';
-        s += '<path d="M 22 56 Q 22 20 64 20 Q 106 20 106 56" stroke="#e53935" stroke-width="5" fill="none" stroke-linecap="round"/>';
+        s += '<path d="M 22 56 Q 22 20 64 20 Q 106 20 106 56" stroke="#1a1a1a" stroke-width="7" fill="none" stroke-linecap="round"/>';
+        s += '<path d="M 22 56 Q 22 20 64 20 Q 106 20 106 56" stroke="#e53935" stroke-width="4" fill="none" stroke-linecap="round"/>';
         s += '<ellipse cx="22" cy="62" rx="10" ry="14" fill="#1a1a1a"/>';
         s += '<ellipse cx="106" cy="62" rx="10" ry="14" fill="#1a1a1a"/>';
         s += '<ellipse cx="22" cy="62" rx="6" ry="9" fill="#e53935"/>';
@@ -1874,25 +1924,52 @@ function makeOriginalMascotSVG(size, deco){
         s += '<ellipse cx="76" cy="66" rx="14" ry="11" fill="#1a1a1a" opacity="0.88"/>';
         s += '<rect x="60" y="63" width="8" height="6" fill="#1a1a1a"/>';
     }
+    if(d.includes('monocle')){
+        s += '<circle cx="76" cy="66" r="14" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>';
+        s += '<circle cx="76" cy="66" r="12" fill="rgba(200,220,255,0.4)"/>';
+        s += '<path d="M 90 78 L 96 108" stroke="#FFD700" stroke-width="2"/>';
+    }
+    if(d.includes('devil_eyes')){
+        s += '<ellipse cx="52" cy="66" rx="7" ry="14" fill="#FF0000"/>';
+        s += '<ellipse cx="76" cy="66" rx="7" ry="14" fill="#FF0000"/>';
+        s += '<ellipse cx="50" cy="58" rx="3" ry="5" fill="#FF8888"/>';
+        s += '<ellipse cx="74" cy="58" rx="3" ry="5" fill="#FF8888"/>';
+    }
+    if(d.includes('ninja')){
+        s += '<rect x="32" y="60" width="64" height="12" fill="#1a1a1a"/>';
+    }
     if(d.includes('scarf')){
-        s += '<path d="M 32 106 Q 64 120 96 106 L 96 118 Q 64 132 32 118 Z" fill="#e53935" stroke="#b71c1c" stroke-width="2"/>';
-        s += '<rect x="82" y="112" width="14" height="32" fill="#e53935" stroke="#b71c1c" stroke-width="2"/>';
+        s += '<path d="M 32 106 Q 64 120 96 106 L 96 118 Q 64 132 32 118 Z" fill="#e53935" stroke="#b71c1c" stroke-width="1.5"/>';
+        s += '<rect x="82" y="112" width="14" height="32" fill="#e53935" stroke="#b71c1c" stroke-width="1.5"/>';
     }
     if(d.includes('bow')){
-        s += '<path d="M 108 42 L 94 32 L 94 52 Z" fill="#e91e63" stroke="#c2185b" stroke-width="2"/>';
-        s += '<path d="M 108 42 L 122 32 L 122 52 Z" fill="#e91e63" stroke="#c2185b" stroke-width="2"/>';
+        s += '<path d="M 108 42 L 94 32 L 94 52 Z" fill="#e91e63" stroke="#c2185b" stroke-width="1.5"/>';
+        s += '<path d="M 108 42 L 122 32 L 122 52 Z" fill="#e91e63" stroke="#c2185b" stroke-width="1.5"/>';
         s += '<circle cx="108" cy="42" r="4" fill="#c2185b"/>';
     }
     if(d.includes('halo')){
-        s += '<ellipse cx="64" cy="18" rx="34" ry="6" fill="none" stroke="#FFD700" stroke-width="5"/>';
+        s += '<ellipse cx="64" cy="18" rx="34" ry="6" fill="none" stroke="#FFD700" stroke-width="4"/>';
     }
     if(d.includes('horns')){
-        s += '<path d="M 40 30 L 32 8 L 48 24 Z" fill="#8B0000" stroke="#5D0000" stroke-width="2"/>';
-        s += '<path d="M 88 30 L 96 8 L 80 24 Z" fill="#8B0000" stroke="#5D0000" stroke-width="2"/>';
+        s += '<path d="M 40 30 L 32 8 L 48 24 Z" fill="#8B0000" stroke="#5D0000" stroke-width="1.5"/>';
+        s += '<path d="M 88 30 L 96 8 L 80 24 Z" fill="#8B0000" stroke="#5D0000" stroke-width="1.5"/>';
     }
+    if(d.includes('flowers')){
+        s += '<circle cx="40" cy="30" r="6" fill="#e91e63" stroke="#880e4f" stroke-width="1.5"/>';
+        s += '<circle cx="54" cy="20" r="6" fill="#FFC107" stroke="#B8860B" stroke-width="1.5"/>';
+        s += '<circle cx="74" cy="20" r="6" fill="#e91e63" stroke="#880e4f" stroke-width="1.5"/>';
+        s += '<circle cx="88" cy="30" r="6" fill="#9C27B0" stroke="#4A148C" stroke-width="1.5"/>';
+    }
+    if(d.includes('cat_ears')){
+        s += '<path d="M 40 30 L 34 4 L 52 22 Z" fill="#FF8C00" stroke="#1a1a1a" stroke-width="1.5"/>';
+        s += '<path d="M 88 30 L 94 4 L 76 22 Z" fill="#FF8C00" stroke="#1a1a1a" stroke-width="1.5"/>';
+        s += '<path d="M 42 26 L 38 10 L 48 22 Z" fill="#FFB6C1"/>';
+        s += '<path d="M 86 26 L 90 10 L 80 22 Z" fill="#FFB6C1"/>';
+    }
+}
     return '<svg viewBox="-5 -10 138 138" width="' + size + '" height="' + size + '" xmlns="http://www.w3.org/2000/svg">' + s + '</svg>';
 }
-    function renderSiteMascot(){document.getElementById('mascotFloat').innerHTML=makeOriginalMascotSVG(170,equippedItems);}
+    function renderSiteMascot(){document.getElementById('mascotFloat').innerHTML=makeOriginalMascotSVG(135,equippedItems);}
 /* ============================================================
    ДОСТИЖЕНИЯ
    ============================================================ */
