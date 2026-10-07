@@ -1823,10 +1823,9 @@ function makeRoundMascotSVG(size, deco){
         s += '<rect x="34" y="28" width="60" height="6" fill="#8B4513"/>';
         s += '<rect x="56" y="4" width="16" height="4" fill="#FFD700"/>';
     }
-    
     return '<svg viewBox="-10 -20 148 156" width="' + size + '" height="' + size + '" xmlns="http://www.w3.org/2000/svg">' + s + '</svg>';
 }
-function makeOriginalMascotSVG(size, deco){
+function makeOriginalMascotSVG(size, deco)
     const d = deco || [];
     let s = '';
     s += '<ellipse cx="42" cy="112" rx="24" ry="14" fill="#FF8C00" stroke="#1a1a1a" stroke-width="2"/>';
@@ -1966,7 +1965,6 @@ function makeOriginalMascotSVG(size, deco){
         s += '<path d="M 42 26 L 38 10 L 48 22 Z" fill="#FFB6C1"/>';
         s += '<path d="M 86 26 L 90 10 L 80 22 Z" fill="#FFB6C1"/>';
     }
-}
     return '<svg viewBox="-5 -10 138 138" width="' + size + '" height="' + size + '" xmlns="http://www.w3.org/2000/svg">' + s + '</svg>';
 }
     function renderSiteMascot(){document.getElementById('mascotFloat').innerHTML=makeOriginalMascotSVG(135,equippedItems);}
