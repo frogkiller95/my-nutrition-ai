@@ -7,7 +7,6 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 COPY . .
 
-ENV PORT=8080
-EXPOSE 8080
+EXPOSE 3000
 
-CMD gunicorn --bind 0.0.0.0:${PORT} --workers 1 --threads 4 --timeout 120 app:app
+CMD gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120 app:app
