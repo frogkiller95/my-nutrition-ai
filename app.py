@@ -7,16 +7,23 @@ from email.mime.text import MIMEText
 
 app = Flask(__name__)
 
+from gigachat import GigaChat
+
 # === ФУНКЦИЯ ЗАПРОСА К ИИ ===
 def ask_ai(prompt, timeout=45):
     try:
-        response = requests.get(f"https://text.pollinations.ai/{prompt}", timeout=timeout)
-        text = response.text
-        if '"error"' in text or 'Queue full' in text or '429' in text:
-            return None
-        return text
+        # Берем ключ из настроек хостинга (который мы добавили в переменные)
+        giga_key = os.environ.get("GIGACHAT_CREDENTIALS")
+        
+        # Подключаемся к GigaChat
+        with GigaChat(credentials=giga_key, verify_ssl_certs=False, timeout=timeout) as giga:
+            response = giga.chat(prompt)
+            text = response.choices[0].message.content
+            return text
+            
     except Exception as e:
         print("Ошибка ИИ:", e)
+        return None
         return None
 
 def calculate_bju_multiple(items):
